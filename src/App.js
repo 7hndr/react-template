@@ -16,7 +16,7 @@ export const App = () => (
         rel="noopener noreferrer">
         React docs
       </a>
-      {/* partially declarative below */}
+      {/* partially imperative below */}
       <span className="App-copyright">{`All rights reserved | ${new Date().getFullYear()}`}</span>
     </header>
   </div>
