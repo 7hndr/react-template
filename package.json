@@ -1,7 +1,7 @@
 {
+	"homepage": "https://github.com/7hndr/react-template/",
 	"name": "edu",
 	"version": "0.1.13",
-	"homepage": "",
 	"private": true,
 	"devDependencies": {
 		"@babel/plugin-proposal-private-property-in-object": "^7.21.11",
