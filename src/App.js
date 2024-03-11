@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { FaHashtag, Routes, HashRouter, Route } from 'react-router-dom'
 
 import styles from './styles/App.module.scss'
 
@@ -8,7 +8,7 @@ import { Footer } from './layout/Footer/Footer'
 import { routeList } from './config/router'
 
 export const App = () => (
-	<BrowserRouter>
+	<FaHashtag>
 		<div className={styles.app}>
 			<Header />
 
@@ -29,5 +29,5 @@ export const App = () => (
 
 			<Footer />
 		</div>
-	</BrowserRouter>
+	</FaHashtag>
 )
