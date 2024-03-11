@@ -1,4 +1,4 @@
-import { HashRouter, Routes, Route } from 'react-router-dom'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
 
 import styles from './styles/App.module.scss'
 
@@ -8,7 +8,7 @@ import { Footer } from './layout/Footer/Footer'
 import { routeList } from './config/router'
 
 export const App = () => (
-	<HashRouter>
+	<BrowserRouter basename='/react-template'>
 		<div className={styles.app}>
 			<Header />
 
@@ -29,5 +29,5 @@ export const App = () => (
 
 			<Footer />
 		</div>
-	</HashRouter>
+	</BrowserRouter>
 )
