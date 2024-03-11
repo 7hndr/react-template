@@ -116,13 +116,13 @@ export const Calculator = () => {
 			case 'decimal': {
 				setResultState(false)
 
-				if (displayValue.endsWith('+') || displayValue.endsWith('-')) {
-					setDisplayValue(displayValue + `0.`)
-				} else if (
+				if (
 					typeof displayValue !== 'number' &&
-					!displayValue.endsWith('.')
+					(displayValue.endsWith('+') || displayValue.endsWith('-'))
 				) {
-					setDisplayValue(displayValue + value)
+					setDisplayValue(`${displayValue}0.`)
+				} else {
+					setDisplayValue(`${displayValue}.`)
 				}
 				break
 			}

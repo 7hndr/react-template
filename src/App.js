@@ -1,25 +1,33 @@
-import logo from './images/logo.svg'
-import './App.scss'
-import { Calculator } from './Calculator'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
+
+import styles from './styles/App.module.scss'
+
+import { Header } from './layout/Header/Header'
+import { Footer } from './layout/Footer/Footer'
+
+import { routeList } from './config/router'
 
 export const App = () => (
-	<div className='App'>
-		<header className='App-header'>
-			<img
-				src={logo}
-				className='App-logo'
-				alt='logo'
-			/>
-			<a
-				className='App-link'
-				href='https://reactjs.org'
-				target='_blank'
-				rel='noopener noreferrer'
-			>
-				React docs
-			</a>
-		</header>
-		<Calculator />
-		<span className='App-copyright'>{`All rights reserved | ${new Date().getFullYear()}`}</span>
-	</div>
+	<BrowserRouter>
+		<div className={styles.app}>
+			<Header />
+
+			<div className={styles.content}>
+				<Routes>
+					{routeList.map(r => {
+						const Component = r.component
+						return (
+							<Route
+								path={r.path}
+								key={r.path}
+								element={<Component />}
+							/>
+						)
+					})}
+				</Routes>
+			</div>
+
+			<Footer />
+		</div>
+	</BrowserRouter>
 )

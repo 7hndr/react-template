@@ -1,0 +1,21 @@
+.app {
+	display: grid;
+	height: 100vh;
+	overflow: hidden;
+	grid-gap: 2rem;
+	background-color: #282c34;
+	font-size: 1rem;
+	color: white;
+	justify-content: center;
+	grid-template-rows: 5rem auto 2.5rem;
+	grid-template-columns: 100%;
+}
+
+.content {
+	display: grid;
+	padding: 1rem;
+	justify-content: center;
+	align-content: start;
+	height: 100%;
+	overflow: hidden;
+}

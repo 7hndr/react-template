@@ -1,0 +1,77 @@
+.header {
+	border-bottom: 3px solid var(--surface);
+	display: grid;
+	grid-auto-flow: column;
+	padding: 1rem;
+	align-items: center;
+	justify-content: start;
+	width: 100%;
+}
+
+.logo {
+	height: 3rem;
+	pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+	.logo {
+		animation: App-logo-spin 8s ease-in-out infinite;
+	}
+}
+
+@keyframes App-logo-spin {
+	0% {
+		transform: rotate(0);
+	}
+	50% {
+		transform: rotate(720deg);
+	}
+	100% {
+		transform: rotate(0);
+	}
+}
+
+.nav {
+	color: var(--primary-text);
+	display: grid;
+	grid-gap: 1rem;
+}
+
+.linksContainer {
+	grid-auto-flow: column;
+	display: grid;
+	grid-gap: 1rem;
+	justify-content: center;
+}
+
+.link {
+	display: grid;
+	justify-content: center;
+	align-items: center;
+	cursor: pointer;
+	grid-auto-flow: column;
+	grid-gap: 0.25rem;
+	padding: 0.5rem 0.75rem;
+	background-color: var(--accent);
+	border-radius: var(--border-radius);
+	border: none;
+	transition: background 0.15s ease;
+	color: var(--contrast-text);
+	text-align: center;
+	text-decoration: none;
+	font-size: 1rem;
+	font-weight: bold;
+
+	&:hover {
+		background-color: var(--accent-hover);
+	}
+
+	&:active {
+		background-color: var(--disabled-color);
+	}
+}
+
+.activeLink {
+	background-color: var(--accent-hover);
+	opacity: 0.66;
+}

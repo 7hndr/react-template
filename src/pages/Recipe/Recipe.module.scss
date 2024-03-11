@@ -1,0 +1,105 @@
+.container {
+	display: grid;
+	grid-gap: 2rem;
+	min-width: 30rem;
+	max-width: 50rem;
+	justify-content: center;
+}
+
+// Steps
+
+.stepButtonList {
+	list-style: none;
+	display: grid;
+	grid-auto-flow: column;
+	grid-gap: 1rem;
+}
+
+.stepButtonListItem {
+	display: grid;
+	grid-gap: 0.5rem;
+	justify-content: center;
+	align-content: start;
+	justify-items: center;
+}
+
+.stepTitle {
+	font-weight: normal;
+	font-size: 0.75rem;
+	text-align: center;
+}
+
+// recipeContent
+
+.recipeTitle {
+	text-align: center;
+}
+
+.recipeText {
+	padding: 1rem;
+	border-radius: var(--border-radius);
+	border: 1px solid var(--accent);
+	height: 10rem;
+}
+
+// Buttons
+
+.button {
+	cursor: pointer;
+	border: none;
+	font-weight: bold;
+	background-color: var(--accent);
+	color: var(--contrast-text);
+	border-radius: var(--border-radius);
+	transition: background-color 0.15s ease;
+	padding: 0.5rem 1rem;
+	font-size: 1rem;
+
+	&:hover {
+		background-color: var(--accent-hover);
+	}
+
+	&:active {
+		background-color: var(--surface-active);
+		color: var(--primary-text);
+	}
+}
+
+.buttonDisabled {
+	color: var(--secondary-text);
+	pointer-events: none;
+	opacity: 0.5;
+}
+
+.buttonActive {
+	background-color: var(--surface-active);
+	color: var(--primary-text);
+
+	&:hover {
+		background-color: var(--surface-active);
+	}
+}
+
+.radial {
+	border-radius: 50%;
+	width: 2rem;
+	height: 2rem;
+	padding: 0;
+}
+
+.controlButtons {
+	display: grid;
+	grid-gap: 1rem;
+	grid-auto-flow: column;
+	align-items: center;
+	justify-content: center;
+}
+
+// Other
+
+.noRecipe {
+	display: grid;
+	grid-gap: 1rem;
+	justify-content: center;
+	text-align: center;
+}
