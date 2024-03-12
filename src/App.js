@@ -8,7 +8,7 @@ import { Footer } from './layout/Footer/Footer'
 import { routeList } from './config/router'
 
 export const App = () => (
-	<BrowserRouter basename='/react-template'>
+	<BrowserRouter>
 		<div className={styles.app}>
 			<Header />
 
