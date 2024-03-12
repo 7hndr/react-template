@@ -22,6 +22,11 @@
 	width: 100%;
 }
 
+.highlight {
+	color: var(--accent);
+	font-weight: bold;
+}
+
 .buttonDisabled {
 	pointer-events: none;
 	opacity: 0.5;

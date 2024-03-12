@@ -149,7 +149,13 @@ export const Calculator = () => {
 
 	return (
 		<div className={styles.container}>
-			<span className={styles.display}>{displayValue}</span>
+			<span
+				className={`${styles.display} ${
+					resultState && styles.highlight
+				}`}
+			>
+				{displayValue}
+			</span>
 			<div className={styles.buttonList}>
 				{buttons.map(({ value, type }) => (
 					<button
