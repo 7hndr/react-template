@@ -11,7 +11,10 @@ export const ToDo = () => {
 	const [error, setError] = useState('')
 
 	const onInputButtonClick = () => {
-		const promptValue = prompt('Введите значение')
+		const promptValue = prompt('Введите значение')?.trim()
+
+		if (!promptValue) return
+
 		setValue(promptValue)
 
 		setError(
