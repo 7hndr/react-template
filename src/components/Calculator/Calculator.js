@@ -39,9 +39,11 @@ export const Calculator = () => {
 			}
 			case 'decimal': {
 				setResultState(false)
-
+				console.log({ expArr, value })
 				if (expArr.length && OPERATORS.includes(expArr.at(-1))) {
 					setExpArr([...expArr, '0.'])
+				} else if (!expArr.length) {
+					setExpArr([`0.`])
 				} else if (Number.isInteger(expArr.at(-1))) {
 					setExpArr(
 						getArrWithModifedLastEl(expArr, `${expArr.at(-1)}.`)
