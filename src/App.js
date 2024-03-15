@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 
 import styles from './styles/App.module.scss'
 
@@ -8,7 +8,13 @@ import { Footer } from './layout/Footer/Footer'
 import { routeList } from './config/router'
 
 export const App = () => (
-	<BrowserRouter basename='/react-template'>
+	<BrowserRouter
+		basename={
+			!process.env.NODE_ENV || process.env.NODE_ENV === 'development'
+				? ''
+				: '/react-template'
+		}
+	>
 		<div className={styles.app}>
 			<Header />
 
@@ -18,12 +24,22 @@ export const App = () => (
 						const Component = r.component
 						return (
 							<Route
+								exact={!!r.exact}
 								path={r.path}
 								key={r.path}
 								element={<Component />}
 							/>
 						)
 					})}
+					<Route
+						path='*'
+						element={
+							<Navigate
+								replace
+								to='/'
+							/>
+						}
+					/>
 				</Routes>
 			</div>
 

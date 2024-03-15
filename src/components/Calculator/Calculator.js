@@ -1,97 +1,22 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import styles from './Calculator.module.scss'
+import { buttons } from './button-config'
+import { getArrWithModifedLastEl, calcResult } from './helpers'
 
-const buttons = [
-	{ value: '1', type: 'number' },
-	{ value: '2', type: 'number' },
-	{ value: '3', type: 'number' },
-	{ value: '4', type: 'number' },
-	{ value: '5', type: 'number' },
-	{ value: '6', type: 'number' },
-	{ value: '7', type: 'number' },
-	{ value: '8', type: 'number' },
-	{ value: '9', type: 'number' },
-	{ value: '0', type: 'number' },
-	{ value: '.', type: 'decimal' },
-	{ value: 'C', type: 'clear' },
-	{ value: '+', type: 'operator' },
-	{ value: '-', type: 'operator' },
-	{ value: '=', type: 'equal' }
-]
-
-const splitString = expression => {
-	const expressionString = String(expression).split('')
-	const expArray = []
-	let tempNumber = ''
-
-	expressionString.forEach((char, i) => {
-		const isOperator = buttons.find(
-			({ value, type }) => type === 'operator' && value === char
-		)
-
-		if (isOperator) {
-			if (tempNumber) {
-				expArray.push(+tempNumber)
-				tempNumber = ''
-				expArray.push(char)
-			} else {
-				tempNumber += '-'
-			}
-		} else {
-			tempNumber += char
-		}
-	})
-	if (tempNumber) {
-		expArray.push(+tempNumber)
-	}
-
-	return expArray
-}
-
-const calcResultFromExpressionArray = expString => {
-	const expArray = splitString(expString)
-	let result = expArray.length === 1 ? parseFloat(expArray[0]) : 0
-
-	expArray.forEach((item, i) => {
-		if (i > 1 && typeof expArray[i] === 'number') {
-			const currentOperand = expArray[i]
-			const prevOperand = expArray[i - 2]
-			const prevOperator = expArray[i - 1]
-
-			switch (prevOperator) {
-				case '-':
-					if (i === 2) {
-						result += prevOperand - currentOperand
-					} else {
-						result -= currentOperand
-					}
-					break
-				case '+':
-					if (i === 2) {
-						result += prevOperand + currentOperand
-					} else {
-						result += currentOperand
-					}
-					break
-				default:
-					break
-			}
-		}
-	})
-
-	return result
-}
+const OPERATORS = ['-', '+']
 
 export const Calculator = () => {
 	const [displayValue, setDisplayValue] = useState('')
 	const [resultState, setResultState] = useState(false)
+	const [expArr, setExpArr] = useState([])
 
 	const isButtonDisabled = ({ type }) => {
 		switch (type) {
 			case 'operator':
 				return (
 					typeof displayValue !== 'number' &&
-					(displayValue.endsWith('+') || displayValue.endsWith('-'))
+					expArr.length &&
+					OPERATORS.includes(expArr.at(-1))
 				)
 
 			default:
@@ -102,50 +27,70 @@ export const Calculator = () => {
 	const handleButtonClick = ({ value, type }) => {
 		switch (type) {
 			case 'clear':
-				setDisplayValue('')
 				setResultState(false)
-
+				setExpArr([])
 				break
 			case 'equal': {
-				const result = calcResultFromExpressionArray(displayValue)
+				const result = calcResult(expArr)
 
-				setDisplayValue(result)
 				setResultState(true)
+				setExpArr([result])
 				break
 			}
 			case 'decimal': {
 				setResultState(false)
 
-				if (
-					typeof displayValue !== 'number' &&
-					(displayValue.endsWith('+') || displayValue.endsWith('-'))
-				) {
-					setDisplayValue(`${displayValue}0.`)
-				} else {
-					setDisplayValue(`${displayValue}.`)
+				if (expArr.length && OPERATORS.includes(expArr.at(-1))) {
+					setExpArr([...expArr, '0.'])
+				} else if (Number.isInteger(expArr.at(-1))) {
+					setExpArr(
+						getArrWithModifedLastEl(expArr, `${expArr.at(-1)}.`)
+					)
 				}
 				break
 			}
 			case 'operator': {
-				if (!displayValue && value !== '-') {
-					return
+				if (!expArr.length && value !== '-') {
+					setExpArr([value])
 				} else {
-					setDisplayValue(displayValue + value)
+					setExpArr([...expArr, value])
 				}
 				setResultState(false)
 				break
 			}
-
-			default:
+			case 'number': {
 				setResultState(false)
-				setDisplayValue(
-					resultState
-						? String(parseFloat(value))
-						: String(displayValue) + parseFloat(value)
-				)
+
+				if (resultState) {
+					setExpArr([parseFloat(value)])
+				} else if (OPERATORS.includes(expArr?.at(-1))) {
+					if (expArr.length > 1) {
+						setExpArr([...expArr, parseFloat(value)])
+					} else if (expArr[0] === '-') {
+						setExpArr([parseFloat(value) * -1])
+					}
+				} else if (
+					(expArr.length && typeof expArr.at(-1) === 'string') ||
+					Number.isInteger(expArr.at(-1))
+				) {
+					setExpArr(
+						getArrWithModifedLastEl(
+							expArr,
+							parseFloat(String(expArr.at(-1)) + value)
+						)
+					)
+				} else {
+					setExpArr([...expArr, parseFloat(value)])
+				}
+
 				break
+			}
+			default:
+				console.warn('Incorrect type')
 		}
 	}
+
+	useEffect(() => setDisplayValue(expArr.join(' ')), [expArr])
 
 	return (
 		<div className={styles.container}>

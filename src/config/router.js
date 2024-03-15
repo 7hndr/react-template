@@ -5,7 +5,7 @@ import { ToDoPage } from '../pages/ToDo/ToDo'
 import { RecipePage } from '../pages/Recipe/Recipe'
 
 export const routeList = [
-	{ icon: FaHome, name: 'Home', path: '/', component: Home },
+	{ icon: FaHome, name: 'Home', path: '/', component: Home, exact: true },
 	{
 		icon: FaCalculator,
 		name: 'Calculator',
