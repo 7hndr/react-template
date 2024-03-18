@@ -1,4 +1,4 @@
-import { ToDo } from '../../components/ToDo/ToDo'
+import { ToDo } from '../../components'
 
 export const ToDoPage = () => {
 	return <ToDo />
