@@ -19,6 +19,7 @@ export const GameContainer = () => {
 		setDirtyState(false)
 		setField(INITIAL_FIELD)
 		setActiveWinPattern(null)
+		setCurrentPlayer(PLAYERS.PLAYER_1)
 	}
 
 	const cellClickHandler = i => {
