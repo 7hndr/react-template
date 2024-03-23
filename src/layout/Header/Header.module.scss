@@ -5,6 +5,7 @@
 	padding: 1rem;
 	align-items: center;
 	justify-content: start;
+	overflow: hidden;
 	width: 100%;
 }
 
@@ -41,6 +42,8 @@
 	grid-auto-flow: column;
 	display: grid;
 	grid-gap: 1rem;
+	overflow: auto;
+	padding: 0.5rem;
 	justify-content: center;
 }
 
@@ -70,7 +73,12 @@
 		background-color: var(--disabled-color);
 	}
 }
-
+@media (width < 700px) {
+	.link {
+		padding: 0.25rem;
+		font-size: 0.75rem;
+	}
+}
 .activeLink {
 	background-color: var(--accent-hover);
 	opacity: 0.66;

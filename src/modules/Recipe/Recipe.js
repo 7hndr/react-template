@@ -1,12 +1,12 @@
 import { useState } from 'react'
 import styles from './Recipe.module.scss'
 
-export const Recipe = ({ pelmeni }) => {
+export const Recipe = ({ defaultRecipe }) => {
 	const [recipe, setRecipe] = useState({})
 	const [activeIndex, setActiveIndex] = useState(0)
 
 	const uploadRecipe = () => {
-		setRecipe(pelmeni)
+		setRecipe(defaultRecipe)
 	}
 
 	const stepIsLast = recipe && activeIndex === recipe.steps?.length - 1
@@ -23,12 +23,12 @@ export const Recipe = ({ pelmeni }) => {
 			<p>
 				Номер пиццерии: <br /> <b>+0 (555) 555-55-55</b>
 			</p>
-			<p>Ну или...</p>
+			<p>Ну или вот...</p>
 			<button
 				onClick={uploadRecipe}
 				className={styles.button}
 			>
-				Посмотреть как делать пельмени
+				{defaultRecipe.name}
 			</button>
 		</div>
 	)

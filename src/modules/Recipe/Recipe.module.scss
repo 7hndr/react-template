@@ -29,7 +29,10 @@
 	text-align: center;
 }
 
-// recipeContent
+.recipeContent {
+	display: grid;
+	grid-gap: 1rem;
+}
 
 .recipeTitle {
 	text-align: center;

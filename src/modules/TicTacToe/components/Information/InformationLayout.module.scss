@@ -1,0 +1,8 @@
+.header {
+	display: grid;
+	grid-auto-flow: column;
+	grid-gap: 1rem;
+	grid-template-columns: 1fr auto;
+	height: 2.5rem;
+	align-items: center;
+}

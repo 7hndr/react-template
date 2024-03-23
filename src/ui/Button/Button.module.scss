@@ -1,0 +1,26 @@
+.button {
+	display: grid;
+	align-items: center;
+	justify-content: center;
+	background-color: var(--accent);
+	border-radius: var(--border-radius);
+	cursor: pointer;
+	transition: all 0.15s ease;
+	border: none;
+	padding: 0.5rem 0.75rem;
+	grid-auto-flow: column;
+	grid-gap: 0.5rem;
+	font-size: 1rem;
+	color: var(--contrast-text);
+	text-align: center;
+	text-decoration: none;
+	font-weight: bold;
+
+	&:active {
+		background-color: var(--disabled-color);
+	}
+
+	&:hover {
+		background-color: var(--accent-hover);
+	}
+}

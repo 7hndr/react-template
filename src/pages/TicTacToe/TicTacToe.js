@@ -1,3 +1,3 @@
-import { TicTacToe } from '../../components'
+import { TicTacToe } from '../../modules'
 
 export const TicTacToePage = () => <TicTacToe />

@@ -1,4 +1,6 @@
-import pelmeni from './data.json'
-import { Recipe } from '../../components'
+import data from './data.json'
+import { Recipe } from '../../modules'
 
-export const RecipePage = () => <Recipe data={pelmeni} />
+export const RecipePage = () => {
+	return <Recipe defaultRecipe={data} />
+}
