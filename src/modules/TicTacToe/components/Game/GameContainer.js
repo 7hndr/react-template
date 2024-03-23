@@ -36,7 +36,7 @@ export const GameContainer = () => {
 
 		let hasWinner = false
 
-		if (filledLength >= 3) {
+		if (filledLength >= 5) {
 			let i = 0
 
 			while (!hasWinner) {
