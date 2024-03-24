@@ -7,9 +7,8 @@ export const Switch = ({ onChange, checked, label }) => {
 	const handleChange = () => {
 		const newValue = !isChecked
 		setIsChecked(newValue)
-		if (onChange) {
-			onChange(newValue)
-		}
+
+		onChange(newValue)
 	}
 
 	return (

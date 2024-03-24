@@ -4,10 +4,13 @@ import { InformationLayout } from '../'
 
 export const InformationContainer = ({
 	isDraw,
-	gameOver,
-	currentPlayer,
 	isDirty,
-	restartGame
+	gameOver,
+	isAiOpponent,
+	isLoading,
+	setAiOpponent,
+	restartGame,
+	currentPlayer
 }) => {
 	let headerTitle
 
@@ -16,22 +19,27 @@ export const InformationContainer = ({
 	} else if (gameOver) {
 		headerTitle = `${currentPlayer.name} wins 🎉`
 	} else {
-		headerTitle = `Turn: ${currentPlayer.name}`
+		headerTitle = `Turn: ${currentPlayer.name} ${isLoading ? '🤔' : ''}`
 	}
 
 	return (
 		<InformationLayout
 			isDirty={isDirty}
-			headerTitle={headerTitle}
+			isAiOpponent={isAiOpponent}
+			setAiOpponent={setAiOpponent}
 			restartGame={restartGame}
+			headerTitle={headerTitle}
 		/>
 	)
 }
 
 InformationContainer.propTypes = {
 	isDraw: PropTypes.bool,
-	gameOver: PropTypes.bool,
-	currentPlayer: PropTypes.object.isRequired,
 	isDirty: PropTypes.bool,
-	restartGame: PropTypes.func.isRequired
+	gameOver: PropTypes.bool,
+	isLoading: PropTypes.bool,
+	isAiOpponent: PropTypes.bool.isRequired,
+	setAiOpponent: PropTypes.func.isRequired,
+	restartGame: PropTypes.func.isRequired,
+	currentPlayer: PropTypes.object.isRequired
 }

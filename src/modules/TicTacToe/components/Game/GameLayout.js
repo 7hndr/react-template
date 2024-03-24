@@ -5,10 +5,13 @@ import styles from './GameLayout.module.scss'
 
 export const GameLayout = ({
 	isDraw,
-	gameOver,
-	currentPlayer,
-	restartGame,
 	isDirty,
+	gameOver,
+	isAiOpponent,
+	isLoading,
+	setAiOpponent,
+	restartGame,
+	currentPlayer,
 	...fieldProps
 }) => {
 	return (
@@ -19,14 +22,18 @@ export const GameLayout = ({
 				isDraw={isDraw}
 				isDirty={isDirty}
 				gameOver={gameOver}
-				currentPlayer={currentPlayer}
+				isAiOpponent={isAiOpponent}
+				isLoading={isLoading}
+				setAiOpponent={setAiOpponent}
 				restartGame={restartGame}
+				currentPlayer={currentPlayer}
 			/>
 			<FieldContainer
-				currentPlayer={currentPlayer}
-				gameOver={gameOver}
-				isDraw={isDraw}
 				{...fieldProps}
+				isDraw={isDraw}
+				gameOver={gameOver}
+				isLoading={isLoading}
+				currentPlayer={currentPlayer}
 			/>
 		</div>
 	)
@@ -36,6 +43,9 @@ GameLayout.propTypes = {
 	isDraw: PropTypes.bool,
 	isDirty: PropTypes.bool,
 	gameOver: PropTypes.bool,
+	isLoading: PropTypes.bool,
+	isAiOpponent: PropTypes.bool.isRequired,
+	setAiOpponent: PropTypes.func.isRequired,
 	restartGame: PropTypes.func.isRequired,
 	currentPlayer: PropTypes.object.isRequired
 }

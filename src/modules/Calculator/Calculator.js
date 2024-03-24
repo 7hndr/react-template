@@ -39,7 +39,7 @@ export const Calculator = () => {
 			}
 			case 'decimal': {
 				setResultState(false)
-				console.log({ expArr, value })
+
 				if (expArr.length && OPERATORS.includes(expArr.at(-1))) {
 					setExpArr([...expArr, '0.'])
 				} else if (!expArr.length) {
