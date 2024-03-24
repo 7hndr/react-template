@@ -30,13 +30,13 @@ export const GameContainer = () => {
 		setField(() => uipdatedField)
 		setDirtyState(true)
 
-		const filledLength = uipdatedField.filter(
+		const currentUserFilledLength = uipdatedField.filter(
 			f => f?.id === currentPlayer?.id
 		)?.length
 
 		let hasWinner = false
 
-		if (filledLength >= 5) {
+		if (currentUserFilledLength >= 3) {
 			let i = 0
 
 			while (!hasWinner) {

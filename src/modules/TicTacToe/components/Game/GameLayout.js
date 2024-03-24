@@ -4,14 +4,12 @@ import { FieldContainer, InformationContainer } from '../'
 import styles from './GameLayout.module.scss'
 
 export const GameLayout = ({
-	field,
 	isDraw,
-	isDirty,
 	gameOver,
-	restartGame,
 	currentPlayer,
-	activeWinPattern,
-	cellClickHandler
+	restartGame,
+	isDirty,
+	...fieldProps
 }) => {
 	return (
 		<div className={styles.game}>
@@ -25,12 +23,10 @@ export const GameLayout = ({
 				restartGame={restartGame}
 			/>
 			<FieldContainer
-				field={field}
-				isDraw={isDraw}
-				gameOver={gameOver}
 				currentPlayer={currentPlayer}
-				activeWinPattern={activeWinPattern}
-				cellClickHandler={cellClickHandler}
+				gameOver={gameOver}
+				isDraw={isDraw}
+				{...fieldProps}
 			/>
 		</div>
 	)
@@ -41,8 +37,5 @@ GameLayout.propTypes = {
 	isDirty: PropTypes.bool,
 	gameOver: PropTypes.bool,
 	restartGame: PropTypes.func.isRequired,
-	currentPlayer: PropTypes.object.isRequired,
-	cellClickHandler: PropTypes.func.isRequired,
-	activeWinPattern: PropTypes.arrayOf(PropTypes.number),
-	field: PropTypes.arrayOf(PropTypes.object).isRequired
+	currentPlayer: PropTypes.object.isRequired
 }
