@@ -1,12 +1,19 @@
 import {
-	FaCalculator,
-	FaHome,
 	FaList,
+	FaDice,
+	FaHome,
+	FaRegUser,
 	FaUtensils,
-	FaDice
+	FaCalculator
 } from 'react-icons/fa'
 import { Home } from '../pages/Home/Home'
-import { CalculatorPage, ToDoPage, RecipePage, TicTacToePage } from '../pages'
+import {
+	ToDoPage,
+	AuthPage,
+	RecipePage,
+	TicTacToePage,
+	CalculatorPage
+} from '../pages'
 
 export const routeList = [
 	{ icon: FaHome, name: 'Home', path: '/', component: Home, exact: true },
@@ -28,5 +35,11 @@ export const routeList = [
 		name: 'TicTacToe',
 		path: '/tic-tac-toe',
 		component: TicTacToePage
+	},
+	{
+		icon: FaRegUser,
+		name: 'Auth',
+		path: '/auth',
+		component: AuthPage
 	}
 ]

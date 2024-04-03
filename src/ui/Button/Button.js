@@ -1,12 +1,26 @@
 import styles from './Button.module.scss'
 
-export const Button = ({ children, onClick }) => {
+export const Button = ({
+	children,
+	loading,
+	onClick,
+	title,
+	type,
+	disabled,
+	_ref
+}) => {
 	return (
 		<button
+			ref={_ref}
+			type={type}
+			disabled={disabled}
 			onClick={onClick}
-			className={styles.button}
+			title={title}
+			className={`${styles.button} ${disabled ? styles.disabled : ''} ${
+				loading ? styles.loading : ''
+			}`}
 		>
-			{children}
+			{!loading && children}
 		</button>
 	)
 }

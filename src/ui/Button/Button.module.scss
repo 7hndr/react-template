@@ -13,8 +13,10 @@
 	font-size: 1rem;
 	color: var(--contrast-text);
 	text-align: center;
+	height: 2.25rem;
 	text-decoration: none;
 	font-weight: bold;
+	position: relative;
 
 	&:active {
 		background-color: var(--disabled-color);
@@ -22,5 +24,43 @@
 
 	&:hover {
 		background-color: var(--accent-hover);
+	}
+}
+
+.loading::after {
+	content: '•';
+	animation: loader 1.5s ease infinite;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	font-size: 0.75rem;
+}
+
+.disabled {
+	opacity: 0.6;
+	pointer-events: none;
+}
+
+@keyframes loader {
+	0% {
+		content: '•';
+		opacity: 0.5;
+	}
+	25% {
+		content: '• • •';
+		opacity: 1;
+	}
+	50% {
+		content: '• • • • •';
+		opacity: 0.75;
+	}
+	75% {
+		content: '• • •';
+		opacity: 0.5;
+	}
+	95% {
+		content: '';
+		opacity: 0.25;
 	}
 }

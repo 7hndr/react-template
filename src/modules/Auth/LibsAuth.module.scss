@@ -1,0 +1,56 @@
+.authWrapper {
+	display: grid;
+	padding: 2rem 3rem 1.5rem;
+	width: 25rem;
+	grid-gap: 0.5rem;
+	border-radius: var(--border-radius);
+	background-color: var(--surface);
+	justify-content: center;
+	grid-template-columns: 1fr;
+}
+
+.icon {
+	justify-self: center;
+}
+
+.form {
+	display: grid;
+	grid-gap: 1rem;
+	padding: 1rem;
+}
+
+.input {
+	color: var(--primary-text);
+	display: grid;
+	align-items: center;
+	border: none;
+	border-radius: var(--border-radius);
+	padding: 0.75rem 1rem;
+	background-color: var(--field);
+	font-size: 1rem;
+
+	&:focus {
+		outline: 2px solid var(--accent-hover);
+	}
+}
+
+.inputWrapper {
+	display: grid;
+	grid-gap: 0.25rem;
+}
+
+.label {
+	color: var(--primary-text);
+	font-size: 1rem;
+}
+
+.errorBlock {
+	color: var(--error-text);
+	font-size: 1rem;
+}
+
+.buttonsBlock {
+	display: grid;
+	grid-template-columns: 1fr auto;
+	grid-gap: 0.5rem;
+}

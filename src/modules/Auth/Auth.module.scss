@@ -1,0 +1,26 @@
+.authWrapper {
+	display: grid;
+	padding: 2rem 3rem 1.5rem;
+	width: 25rem;
+	grid-gap: 0.5rem;
+	border-radius: var(--border-radius);
+	background-color: var(--surface);
+	justify-content: center;
+	grid-template-columns: 1fr;
+}
+
+.icon {
+	justify-self: center;
+}
+
+.form {
+	display: grid;
+	grid-gap: 1rem;
+	padding: 1rem;
+}
+
+.buttonsBlock {
+	display: grid;
+	grid-template-columns: 1fr auto;
+	grid-gap: 0.5rem;
+}
