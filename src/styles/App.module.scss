@@ -2,8 +2,7 @@
 	display: grid;
 	height: 100vh;
 	overflow: hidden;
-	grid-gap: 2rem;
-	background-color: #282c34;
+	background-color: var(--bg);
 	font-size: 1rem;
 	color: white;
 	justify-content: center;
@@ -16,6 +15,13 @@
 	padding: 1rem;
 	justify-content: center;
 	align-content: start;
+	height: 100%;
+	overflow: hidden;
+}
+
+.layout {
+	display: grid;
+	grid-template-columns: 16rem 1fr;
 	height: 100%;
 	overflow: hidden;
 }

@@ -7,6 +7,8 @@
 	--accent-hover: #50acc6;
 	--border-radius: 0.25rem;
 	--surface: #1f2228;
+	--bg: #282c34;
+	--secondary-background: #31363f;
 	--field: #31353e;
 	--surface-active: rgb(41, 37, 52);
 	--white: #fff;
@@ -26,4 +28,30 @@ body {
 	box-sizing: border-box;
 	margin: 0;
 	padding: 0;
+}
+
+::-webkit-scrollbar-button {
+	// background-image: url('');
+	background-repeat: no-repeat;
+	width: 5px;
+	cursor: pointer;
+	height: 0px;
+}
+
+::-webkit-scrollbar-thumb {
+	height: 60px;
+	background-color: var(--secondary-background) !important;
+	border-radius: 2px;
+}
+
+::-webkit-resizer {
+	background-repeat: no-repeat;
+	width: 5px;
+	height: 0px;
+}
+
+::-webkit-scrollbar {
+	width: 7px;
+	height: 5px;
+	border-radius: 2px;
 }

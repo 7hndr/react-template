@@ -2,8 +2,7 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 
 import styles from './styles/App.module.scss'
 
-import { Header } from './layout/Header/Header'
-import { Footer } from './layout/Footer/Footer'
+import { Footer, Header, Sidebar } from './layout'
 
 import { routeList } from './config/router'
 
@@ -18,31 +17,34 @@ export const App = () => (
 		<div className={styles.app}>
 			<Header />
 
-			<div className={styles.content}>
-				<Routes>
-					{routeList.map(r => {
-						const Component = r.component
-						return (
-							<Route
-								exact={!!r.exact}
-								path={r.path}
-								key={r.path}
-								element={<Component />}
-							/>
-						)
-					})}
-					<Route
-						path='*'
-						element={
-							<Navigate
-								replace
-								to='/'
-							/>
-						}
-					/>
-				</Routes>
-			</div>
+			<div className={styles.layout}>
+				<Sidebar />
 
+				<div className={styles.content}>
+					<Routes>
+						{routeList.map(r => {
+							const Component = r.component
+							return (
+								<Route
+									exact={!!r.exact}
+									path={r.path}
+									key={r.path}
+									element={<Component />}
+								/>
+							)
+						})}
+						<Route
+							path='*'
+							element={
+								<Navigate
+									replace
+									to='/'
+								/>
+							}
+						/>
+					</Routes>
+				</div>
+			</div>
 			<Footer />
 		</div>
 	</BrowserRouter>
