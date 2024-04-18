@@ -13,7 +13,7 @@
 	font-size: 1rem;
 	color: var(--contrast-text);
 	text-align: center;
-	height: 2.25rem;
+	height: 2.5rem;
 	text-decoration: none;
 	font-weight: bold;
 	position: relative;
@@ -40,6 +40,39 @@
 .disabled {
 	opacity: 0.6;
 	pointer-events: none;
+}
+
+.active {
+	color: var(--accent) !important;
+}
+
+.square {
+	height: 2.5rem;
+	width: 2.5rem;
+	padding: 0;
+}
+
+.simple {
+	background-color: transparent;
+	outline: 0 solid gray;
+	color: var(--primary-text);
+	padding: 0.25rem;
+	height: auto;
+	transition: all 0.1s ease;
+
+	&:active {
+		outline: 1px solid;
+		color: var(--accent-hover);
+		background-color: transparent;
+		outline-color: var(--disabled-color);
+	}
+
+	&:hover {
+		outline: 1px solid;
+		color: var(--accent-hover);
+		background-color: transparent;
+		outline-color: var(--accent-hover);
+	}
 }
 
 @keyframes loader {

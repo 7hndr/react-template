@@ -1,6 +1,6 @@
 import styles from './Sidebar.module.scss'
 import { NavLink } from 'react-router-dom'
-import { routeList } from '../../config/router'
+import { routeList } from '../../router'
 
 export const Sidebar = () => {
 	return (
@@ -21,7 +21,8 @@ export const Sidebar = () => {
 										: styles.link
 								}
 							>
-								<IconComponent /> {name}
+								<IconComponent />{' '}
+								<span className={styles.linkText}>{name}</span>
 							</NavLink>
 						)
 					})}

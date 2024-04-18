@@ -10,6 +10,8 @@
 	},
 	"dependencies": {
 		"@hookform/resolvers": "^3.3.4",
+		"firebase": "^10.11.0",
+		"json-server": "^1.0.0-alpha.23",
 		"prop-types": "^15.8.1",
 		"react": "^18.2.0",
 		"react-dom": "^18.2.0",
@@ -22,6 +24,7 @@
 	},
 	"scripts": {
 		"start": "set PORT=3003 && react-scripts start",
+		"run-json-server": "json-server --watch db.json --port 3004",
 		"predeploy": "npm run build",
 		"deploy": "gh-pages -d build",
 		"build": "react-scripts build",

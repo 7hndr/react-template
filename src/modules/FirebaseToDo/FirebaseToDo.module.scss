@@ -1,0 +1,81 @@
+.container {
+	display: grid;
+	height: 100%;
+	grid-gap: 0.5rem;
+	padding: 0.5rem;
+	overflow: hidden;
+	width: 36rem;
+
+	@media (width < 900px) {
+		width: 28rem;
+	}
+
+	@media (width < 640px) {
+		width: 20rem;
+	}
+}
+
+.list {
+	grid-gap: 0.5rem;
+	display: grid;
+	overflow: auto;
+	height: 100%;
+}
+
+.listItem {
+	display: grid;
+	grid-auto-flow: column;
+	grid-gap: 1rem;
+	justify-content: space-between;
+	align-items: center;
+	padding: 0.5rem;
+}
+
+.listItemContent {
+	display: grid;
+	grid-auto-flow: column;
+	grid-gap: 0.25rem 0.5rem;
+	align-content: center;
+	align-items: center;
+	grid-template-areas: 'checkbox title' 'checkbox dt';
+}
+
+.listItemControls {
+	display: grid;
+	grid-auto-flow: column;
+	grid-gap: 0.5rem;
+	justify-content: end;
+	align-items: center;
+}
+
+.listItemCheckbox {
+	grid-area: checkbox;
+}
+
+.listItemTitle {
+	grid-area: title;
+}
+
+.listItemDt {
+	grid-area: dt;
+	font-size: 12px;
+	opacity: 0.5;
+}
+
+.listItemActive {
+	text-decoration: line-through;
+}
+
+.header {
+	display: grid;
+	align-items: center;
+	grid-gap: 1rem;
+	grid-template-columns: auto 1fr auto auto;
+	justify-content: space-between;
+}
+
+.noData {
+	display: grid;
+	align-items: center;
+	justify-content: center;
+}

@@ -11,8 +11,11 @@ import {
 	ToDoPage,
 	AuthPage,
 	RecipePage,
+	JPToDoPage,
 	TicTacToePage,
-	CalculatorPage
+	CalculatorPage,
+	JServerToDoPage,
+	FirebaseToDoPage
 } from '../pages'
 
 export const routeList = [
@@ -41,5 +44,23 @@ export const routeList = [
 		name: 'Auth',
 		path: '/auth',
 		component: AuthPage
+	},
+	{
+		icon: FaList,
+		name: 'JSONPlaceholder ToDo',
+		path: '/jp-todo',
+		component: JPToDoPage
+	},
+	{
+		icon: FaList,
+		name: 'json-server ToDo',
+		path: '/json-server-todo',
+		component: JServerToDoPage
+	},
+	{
+		icon: FaList,
+		name: 'Firebase ToDo',
+		path: '/firebase-todo',
+		component: FirebaseToDoPage
 	}
 ]

@@ -1,0 +1,36 @@
+.container {
+	display: grid;
+	height: 100%;
+	grid-gap: 0.5rem;
+	padding: 0.5rem;
+	overflow: hidden;
+	width: 36rem;
+}
+
+.list {
+	grid-gap: 0.5rem;
+	display: grid;
+	overflow: auto;
+	height: 100%;
+}
+
+.listItem {
+	display: grid;
+	grid-auto-flow: column;
+	grid-gap: 1rem;
+	justify-content: start;
+	align-items: center;
+}
+
+.header {
+	display: grid;
+	align-items: center;
+	grid-gap: 0.5rem;
+	grid-auto-flow: column;
+}
+
+.noData {
+	display: grid;
+	align-items: center;
+	justify-content: center;
+}

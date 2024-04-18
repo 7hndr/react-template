@@ -4,7 +4,7 @@ import styles from './styles/App.module.scss'
 
 import { Footer, Header, Sidebar } from './layout'
 
-import { routeList } from './config/router'
+import { routeList } from './router'
 
 export const App = () => (
 	<BrowserRouter
