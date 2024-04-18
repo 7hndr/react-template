@@ -5,13 +5,14 @@ import styles from './styles/App.module.scss'
 import { Footer, Header, Sidebar } from './layout'
 
 import { routeList } from './router'
+// 	"homepage": "https://7hndr.github.com/react-template/",
 
 export const App = () => (
 	<BrowserRouter
 		basename={
 			!process.env.NODE_ENV || process.env.NODE_ENV === 'development'
 				? ''
-				: '/react-template'
+				: ''
 		}
 	>
 		<div className={styles.app}>
