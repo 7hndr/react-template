@@ -26,7 +26,16 @@ export const routeList = [
 		path: '/',
 		element: <Root />,
 		children: [
-			{ path: '*', element: <NotFound /> },
+			{
+				path: '*',
+				element: (
+					<Navigate
+						to='/404'
+						replace={true}
+					/>
+				)
+			},
+			{ path: '404', element: <NotFound /> },
 			{
 				index: true,
 				element: (
@@ -36,6 +45,7 @@ export const routeList = [
 					/>
 				)
 			},
+
 			{ icon: FaHome, name: 'Home', path: '/home', element: <Home /> },
 			{
 				icon: FaCalculator,

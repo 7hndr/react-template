@@ -1,0 +1,18 @@
+.notFoundContainer {
+	display: grid;
+	grid-gap: 2rem;
+	align-items: center;
+	justify-content: center;
+	height: 100%;
+	text-align: center;
+	padding: 2rem;
+	box-sizing: border-box;
+}
+
+.heading {
+	font-size: 5rem;
+}
+
+.message {
+	font-size: 2rem;
+}

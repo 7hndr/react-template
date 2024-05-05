@@ -1,12 +1,18 @@
-export const GET = (url, params) => {
+export const GET = url => {
 	return new Promise((resolve, reject) => {
 		fetch(url, { method: 'GET' })
-			.then(res => resolve(res.json()))
+			.then(res => {
+				if (res.status === 404) {
+					reject(new Error('404'))
+				} else {
+					resolve(res.json())
+				}
+			})
 			.catch(err => reject(err))
 	})
 }
 
-export const DELETE = (url, params) => {
+export const DELETE = url => {
 	return new Promise((resolve, reject) => {
 		fetch(url, { method: 'DELETE' })
 			.then(res => resolve(res.json()))

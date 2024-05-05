@@ -11,7 +11,7 @@ import { useParams, useNavigate } from 'react-router-dom'
 import { useGetTodoItem } from '../../hooks'
 import styles from './JServerToDoItem.module.scss'
 import { Button, Input, Divider } from '../../../../ui'
-
+import { NotExistedTodoItem } from './NotExistedTodoItem'
 import { parseTimeStampToDate } from '../../../../helpers'
 
 const TODO_URL = 'http://localhost:3004/todos'
@@ -62,25 +62,12 @@ export const JServerToDoItem = () => {
 
 	// TODO: upg below with external components
 	const Loader = () => <span>Loading...</span>
-	const UnknownId = () => (
-		<>
-			<Button
-				className={styles.listItemCheckbox}
-				simple
-				onClick={() => goToList()}
-			>
-				<FaArrowLeft />
-				Go back
-			</Button>
-			<span>There is no Todo item with this id</span>
-		</>
-	)
 
 	//  ← — — — — — — — — — — — — {{ 🗲 }} — — — — — — — — — — — — → //
 	return isLoading ? (
 		<Loader />
 	) : !todoItem ? (
-		<UnknownId />
+		<NotExistedTodoItem goToList={goToList} />
 	) : (
 		<div className={styles.container}>
 			<div className={styles.header}>
