@@ -1,6 +1,6 @@
 import { Outlet } from 'react-router-dom'
 import styles from './Root.module.scss'
-import { Footer, Header, Sidebar } from '..'
+import { Footer, Header, Sidebar } from '../'
 
 export const Root = () => {
 	return (
