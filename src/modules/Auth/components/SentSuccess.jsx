@@ -3,6 +3,7 @@ import { Button } from '../../../ui'
 
 import styles from './SentSuccess.module.scss'
 
+// eslint-disable-next-line react/prop-types
 export const SentSuccess = ({ handleTryAgain }) => {
 	return (
 		<>

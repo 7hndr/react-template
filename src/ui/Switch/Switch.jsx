@@ -1,6 +1,7 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import styles from './Switch.module.scss'
 
+// eslint-disable-next-line react/prop-types
 export const Switch = ({ onChange, checked, label }) => {
 	const [isChecked, setIsChecked] = useState(checked || false)
 

@@ -1,18 +1,16 @@
 import { PUT } from '../../../api'
 
-export const useEditTodo = ({ getTodoList, url, setIsLoading }) => {
-	const editTodo = async ({ id, completed, title: prevTitle }) => {
-		const title = prompt('Enter new text', prevTitle)
-		if (!title) return
-
+export const useEditTodo = ({ callback, getTodoList, url, setIsLoading }) => {
+	const editTodo = async ({ ...todo }) => {
 		try {
 			setIsLoading(true)
-			await PUT(`${url}/${id}`, { completed, title, dt: Date.now() })
+			await PUT(`${url}/${todo.id}`, { ...todo, dt: Date.now() })
 		} catch (e) {
 			throw new Error(e)
 		} finally {
 			setIsLoading(false)
-			getTodoList()
+			getTodoList && getTodoList()
+			callback && callback()
 		}
 	}
 

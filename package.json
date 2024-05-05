@@ -1,41 +1,37 @@
 {
 	"name": "edu",
-	"version": "0.1.13",
-	"private": true,
-	"devDependencies": {
-		"@babel/plugin-proposal-private-property-in-object": "^7.21.11",
-		"gh-pages": "^6.1.1",
-		"sass": "^1.71.1"
+	"version": "0.2.13",
+	"type": "module",
+	"scripts": {
+		"dev": "vite",
+		"build": "vite build",
+		"run-json-server": "json-server --watch db.json --port 3004",
+		"lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
+		"preview": "vite preview",
+		"predeploy": "npm run build",
+		"deploy": "gh-pages -d build"
 	},
 	"dependencies": {
 		"@hookform/resolvers": "^3.3.4",
-		"firebase": "^10.11.0",
-		"json-server": "^1.0.0-alpha.23",
-		"prop-types": "^15.8.1",
+		"firebase": "^10.11.1",
 		"react": "^18.2.0",
 		"react-dom": "^18.2.0",
-		"react-hook-form": "^7.51.2",
-		"react-icons": "^5.0.1",
-		"react-router-dom": "^6.22.2",
-		"react-scripts": "5.0.1",
-		"web-vitals": "^2.1.4",
+		"react-hook-form": "^7.51.4",
+		"react-icons": "^5.2.0",
+		"react-router-dom": "^6.23.0",
 		"yup": "^1.4.0"
 	},
-	"scripts": {
-		"start": "set PORT=3003 && react-scripts start",
-		"run-json-server": "json-server --watch db.json --port 3004",
-		"predeploy": "npm run build",
-		"deploy": "gh-pages -d build",
-		"build": "react-scripts build",
-		"eject": "react-scripts eject"
-	},
-	"eslintConfig": {
-		"extends": [
-			"react-app"
-		],
-		"rules": {
-			"react/self-closing-comp": "error"
-		}
+	"devDependencies": {
+		"json-server": "^1.0.0-alpha.23",
+		"sass": "^1.76.0",
+		"@types/react": "^18.2.66",
+		"@types/react-dom": "^18.2.22",
+		"@vitejs/plugin-react": "^4.2.1",
+		"eslint": "^8.57.0",
+		"eslint-plugin-react": "^7.34.1",
+		"eslint-plugin-react-hooks": "^4.6.0",
+		"eslint-plugin-react-refresh": "^0.4.6",
+		"vite": "^5.2.0"
 	},
 	"browserslist": {
 		"production": [

@@ -21,7 +21,7 @@ export const Auth = () => {
 	const { form, onChange, clearForm } = useForm({ initialState })
 	const { getErrors, isFormValid } = useValidate({ form, schema, rules })
 
-	const errors = !!tryCount ? getErrors() : {}
+	const errors = tryCount ? getErrors() : {}
 
 	const handleTryAgain = () => {
 		setTryCount(0)

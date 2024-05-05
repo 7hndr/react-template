@@ -1,6 +1,11 @@
 import { PATCH } from '../../../api'
 
-export const useToggleCompletedTodo = ({ getTodoList, url, setIsLoading }) => {
+export const useToggleCompletedTodo = ({
+	callback,
+	getTodoList,
+	url,
+	setIsLoading
+}) => {
 	const toggleCompletedTodo = async ({ id, completed }) => {
 		try {
 			setIsLoading(true)
@@ -9,7 +14,8 @@ export const useToggleCompletedTodo = ({ getTodoList, url, setIsLoading }) => {
 			throw new Error(e)
 		} finally {
 			setIsLoading(false)
-			getTodoList()
+			getTodoList && getTodoList()
+			callback && callback()
 		}
 	}
 

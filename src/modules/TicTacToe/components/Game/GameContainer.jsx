@@ -79,7 +79,7 @@ export const GameContainer = () => {
 		async (i, delay) => {
 			if (delay) {
 				setLoading(true)
-				await new Promise((r, _) => setTimeout(() => r(), delay))
+				await new Promise(r => setTimeout(() => r(), delay))
 			}
 			if (gameOver || !!field[i]?.id) return
 

@@ -1,6 +1,6 @@
 import { DELETE } from '../../../api'
 
-export const useDeleteTodo = ({ getTodoList, url, setIsLoading }) => {
+export const useDeleteTodo = ({ getTodoList, url, setIsLoading, callback }) => {
 	const deleteTodo = async ({ id }) => {
 		try {
 			setIsLoading(true)
@@ -9,7 +9,8 @@ export const useDeleteTodo = ({ getTodoList, url, setIsLoading }) => {
 			throw new Error(e)
 		} finally {
 			setIsLoading(false)
-			getTodoList()
+			getTodoList && getTodoList()
+			callback && callback()
 		}
 	}
 

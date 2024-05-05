@@ -20,8 +20,6 @@
 
 body {
 	font-family: var(--font);
-	-webkit-font-smoothing: antialiased;
-	-moz-osx-font-smoothing: grayscale;
 }
 
 * {
@@ -31,7 +29,6 @@ body {
 }
 
 ::-webkit-scrollbar-button {
-	// background-image: url('');
 	background-repeat: no-repeat;
 	width: 5px;
 	cursor: pointer;

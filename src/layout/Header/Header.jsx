@@ -8,6 +8,6 @@ export const Header = () => (
 			className={styles.logo}
 			alt='logo'
 		/>
-		<h1>Thndr's apps</h1>
+		<h1>Thndr`s apps</h1>
 	</header>
 )

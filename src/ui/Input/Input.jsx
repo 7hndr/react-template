@@ -1,4 +1,5 @@
-import { useState } from 'react'
+/* eslint-disable react/prop-types */
+import { useState, useRef } from 'react'
 
 import styles from './Input.module.scss'
 import { FaRegTimesCircle } from 'react-icons/fa'
@@ -12,9 +13,14 @@ export const Input = ({
 	...otherProps
 }) => {
 	const [inputValue, setInputValue] = useState('')
+	const internalRef = useRef()
 
 	const clearHandler = () => {
 		setInputValue('')
+
+		_ref?.current?.focus()
+		internalRef?.current?.focus()
+
 		onChange({ target: { name: otherProps.name || null, value: '' } })
 	}
 
@@ -33,12 +39,12 @@ export const Input = ({
 			</label>
 			<input
 				value={inputValue}
-				ref={_ref}
+				ref={_ref || internalRef}
 				className={styles.input}
 				onChange={handleChange}
 				{...otherProps}
 			/>
-			{inputValue && (
+			{(inputValue || otherProps.value) && (
 				<button
 					className={styles.inputCleaner}
 					onClick={clearHandler}
