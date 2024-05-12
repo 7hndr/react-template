@@ -1,18 +1,18 @@
-import {
-	FaRegCircle,
-	FaRegCheckCircle,
-	FaRegTimesCircle,
-	FaRegEdit,
-	FaRegSave,
-	FaArrowLeft
-} from 'react-icons/fa'
-import { useState } from 'react'
-import { useParams, useNavigate } from 'react-router-dom'
-import { useGetTodoItem } from '../../hooks'
 import styles from './JServerToDoItem.module.scss'
-import { Button, Input, Divider } from '../../../../ui'
-import { NotExistedTodoItem } from './NotExistedTodoItem'
-import { parseTimeStampToDate } from '../../../../helpers'
+
+import { useParams, useNavigate } from 'react-router-dom'
+import { useState } from 'react'
+
+import {
+	JServerTodoItemCheckbox,
+	JServerTodoItemControls,
+	JServerTodoItemHeader,
+	JServerTodoItemForm,
+	JServerTodoItemInfo
+} from '../'
+import { useGetTodoItem } from '../../hooks'
+import { Divider } from '../../../../ui'
+import { todoItemContext } from '../../context'
 
 const TODO_URL = 'http://localhost:3004/todos'
 
@@ -27,9 +27,7 @@ export const JServerToDoItem = () => {
 
 	const navigate = useNavigate()
 
-	const goToList = () => {
-		navigate('.')
-	}
+	const goToList = () => navigate('..')
 
 	const hooksArgs = { url: TODO_URL, setIsLoading }
 
@@ -60,92 +58,42 @@ export const JServerToDoItem = () => {
 		})
 	}
 
-	// TODO: upg below with external components
-	const Loader = () => <span>Loading...</span>
-
 	//  ← — — — — — — — — — — — — {{ 🗲 }} — — — — — — — — — — — — → //
+
+	const Loader = () => <span>Loading...</span>
+	const UnknownId = () => <span>There is no Todo item with this id</span>
+
 	return isLoading ? (
 		<Loader />
 	) : !todoItem ? (
-		<NotExistedTodoItem goToList={goToList} />
+		<UnknownId />
 	) : (
-		<div className={styles.container}>
-			<div className={styles.header}>
-				<Button
-					className={styles.listItemCheckbox}
-					simple
-					onClick={() => goToList()}
-				>
-					<FaArrowLeft />
-					Go back
-				</Button>
-				<span className={styles.listItemDt}>
-					{parseTimeStampToDate(todoItem.dt)}
-				</span>
-			</div>
-			<div className={styles.todoBody}>
-				<Button
-					className={styles.listItemCheckbox}
-					simple
-					onClick={() => toggleCompletedTodo(todoItem)}
-				>
-					{todoItem.completed ? (
-						<FaRegCheckCircle />
-					) : (
-						<FaRegCircle />
-					)}
-				</Button>
-				<Divider vertical />
-				<div className={styles.info}>
+		<todoItemContext.Provider
+			value={{
+				todoItem,
+				todoChangeFieldHandler,
+				toggleCompletedTodo,
+				todoSaveHandler,
+				setEditState,
+				deleteTodo,
+				goToList
+			}}
+		>
+			<div className={styles.container}>
+				<JServerTodoItemHeader />
+				<div className={styles.todoBody}>
+					<JServerTodoItemCheckbox />
+
+					<Divider vertical />
+
 					{editState ? (
-						<>
-							<Input
-								className={styles.infoTitle}
-								value={todoItem.title}
-								name='title'
-								label='Title'
-								onChange={todoChangeFieldHandler}
-							/>
-							<Input
-								className={styles.infoDescription}
-								value={todoItem.description}
-								name='description'
-								label='Description'
-								onChange={todoChangeFieldHandler}
-							/>
-							<Button
-								className={styles.infoControls}
-								simple
-								onClick={todoSaveHandler}
-							>
-								<FaRegSave />
-							</Button>
-						</>
+						<JServerTodoItemForm />
 					) : (
-						<>
-							<h1 className={styles.infoTitle}>
-								{todoItem.title}
-							</h1>
-							<p className={styles.infoDesc}>
-								{todoItem.description}
-							</p>
-							<Button
-								className={styles.infoControls}
-								simple
-								onClick={() => setEditState(true)}
-							>
-								<FaRegEdit />
-							</Button>
-						</>
+						<JServerTodoItemInfo />
 					)}
+					<JServerTodoItemControls />
 				</div>
-				<Button
-					simple
-					onClick={() => deleteTodo(todoItem)}
-				>
-					<FaRegTimesCircle />
-				</Button>
 			</div>
-		</div>
+		</todoItemContext.Provider>
 	)
 }

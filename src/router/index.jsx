@@ -26,16 +26,7 @@ export const routeList = [
 		path: '/',
 		element: <Root />,
 		children: [
-			{
-				path: '*',
-				element: (
-					<Navigate
-						to='/404'
-						replace={true}
-					/>
-				)
-			},
-			{ path: '404', element: <NotFound /> },
+			{ path: '*', element: <NotFound /> },
 			{
 				index: true,
 				element: (
@@ -45,7 +36,6 @@ export const routeList = [
 					/>
 				)
 			},
-
 			{ icon: FaHome, name: 'Home', path: '/home', element: <Home /> },
 			{
 				icon: FaCalculator,
@@ -86,15 +76,8 @@ export const routeList = [
 			{
 				icon: FaList,
 				name: 'json-server ToDo',
-				path: '/json-server-todo',
-				element: <JServerToDoPage />,
-				children: [
-					{
-						name: 'json-server ToDo item',
-						path: '/json-server-todo/:id',
-						element: <JServerToDoPage />
-					}
-				]
+				path: '/json-server-todo/*',
+				element: <JServerToDoPage />
 			},
 			{
 				icon: FaList,

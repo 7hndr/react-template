@@ -1,8 +1,18 @@
-import { useParams } from 'react-router-dom'
+import { Routes, Route } from 'react-router-dom'
 
 import { JServerToDoItem, JServerToDoList } from './components'
 
 export const JServerToDo = () => {
-	const { id } = useParams()
-	return id ? <JServerToDoItem /> : <JServerToDoList />
+	return (
+		<Routes>
+			<Route
+				path='/'
+				element={<JServerToDoList />}
+			/>
+			<Route
+				path='/:id'
+				element={<JServerToDoItem />}
+			/>
+		</Routes>
+	)
 }

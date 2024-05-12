@@ -15,76 +15,6 @@
 	}
 }
 
-.list {
-	grid-gap: 0.5rem;
-	display: grid;
-	overflow: auto;
-	height: 100%;
-}
-
-.listItem {
-	display: grid;
-	grid-auto-flow: column;
-	grid-gap: 1rem;
-	justify-content: space-between;
-	align-items: center;
-	padding: 0.5rem;
-}
-
-.listItemContent {
-	display: grid;
-	grid-auto-flow: column;
-	grid-gap: 0.25rem 0.5rem;
-	align-content: center;
-	align-items: center;
-	// grid-template-areas: 'checkbox title' 'checkbox dt';
-}
-
-.listItemControls {
-	display: grid;
-	grid-auto-flow: column;
-	grid-gap: 0.5rem;
-	justify-content: end;
-	align-items: center;
-}
-
-.listItemTitle {
-	// grid-area: title;
-	color: var(--primary-text);
-	font-weight: bold;
-	text-decoration: none;
-}
-
-.listItemDt {
-	font-size: 12px;
-	opacity: 0.5;
-}
-
-.listItemActive {
-	text-decoration: line-through;
-}
-
-.noData {
-	display: grid;
-	align-items: center;
-	justify-content: center;
-}
-
-//
-
-.header {
-	display: grid;
-	grid-auto-flow: column;
-	grid-gap: 1rem;
-	justify-content: space-between;
-	align-items: center;
-
-	h1,
-	a {
-		display: grid;
-	}
-}
-
 .todoBody {
 	grid-template-columns: auto min-content 1fr auto;
 	display: grid;
@@ -93,31 +23,4 @@
 	justify-items: start;
 	align-items: center;
 	justify-content: start;
-}
-
-.info {
-	display: grid;
-	grid-gap: 1rem;
-	width: 100%;
-	grid-template-areas: 'title controls' 'desc controls';
-	align-items: center;
-	grid-template-columns: 1fr auto;
-}
-
-.infoTitle {
-	grid-area: title;
-}
-
-.infoDesc {
-	grid-area: desc;
-}
-
-.infoControls {
-	grid-area: controls;
-}
-
-.controls {
-	display: grid;
-	grid-auto-flow: column;
-	grid-gap: 0.5rem;
 }

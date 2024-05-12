@@ -40,10 +40,6 @@
 	grid-template-areas: 'checkbox title' 'checkbox dt';
 }
 
-.listItemCheckbox {
-	grid-area: checkbox;
-}
-
 .listItemTitle {
 	grid-area: title;
 	color: var(--primary-text);

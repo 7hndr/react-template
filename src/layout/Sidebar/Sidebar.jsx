@@ -15,12 +15,13 @@ export const Sidebar = () => {
 					{navLinks
 						.filter(({ path }) => path !== '*')
 						.map(({ icon, name, path }) => {
+							const _path = path.replace('/*', '')
 							const IconComponent = icon
 
 							return (
 								<NavLink
 									key={path}
-									to={path}
+									to={_path}
 									className={({ isActive }) =>
 										isActive
 											? `${styles.activeLink} ${styles.link}`

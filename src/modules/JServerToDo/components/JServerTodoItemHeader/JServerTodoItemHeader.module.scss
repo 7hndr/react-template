@@ -1,0 +1,15 @@
+.header {
+	display: grid;
+	justify-content: space-between;
+	grid-auto-flow: column;
+	align-items: center;
+}
+
+.backButton {
+	display: grid;
+}
+
+.dt {
+	font-size: 12px;
+	opacity: 0.5;
+}
