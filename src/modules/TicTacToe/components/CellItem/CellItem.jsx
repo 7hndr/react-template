@@ -1,14 +1,16 @@
 import PropTypes from 'prop-types'
 import styles from './CellItem.module.scss'
+import { PLAYERS } from '../../config'
 
 export const CellItem = ({
-	cell,
+	cellId,
 	index,
 	noHover,
 	isItemDisabled,
 	cellClickHandler
 }) => {
-	const IconComponent = cell?.icon
+	const playersArr = Object.values(PLAYERS)
+	const IconComponent = playersArr.find(p => p.id === cellId)?.icon
 
 	return (
 		<div
@@ -28,7 +30,7 @@ export const CellItem = ({
 }
 
 CellItem.propTypes = {
-	cell: PropTypes.object,
+	cellId: PropTypes.number,
 	index: PropTypes.number,
 	noHover: PropTypes.bool,
 	isItemDisabled: PropTypes.bool,

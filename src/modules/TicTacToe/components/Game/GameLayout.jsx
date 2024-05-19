@@ -4,11 +4,8 @@ import { FieldContainer, InformationContainer } from '../'
 import styles from './GameLayout.module.scss'
 
 export const GameLayout = ({
-	isDraw,
 	isDirty,
-	gameOver,
 	isAiOpponent,
-	isLoading,
 	setAiOpponent,
 	restartGame,
 	currentPlayer,
@@ -19,20 +16,14 @@ export const GameLayout = ({
 			<h1 className={styles.title}>⚔️ Chrome vs IE ⚔️</h1>
 
 			<InformationContainer
-				isDraw={isDraw}
 				isDirty={isDirty}
-				gameOver={gameOver}
 				isAiOpponent={isAiOpponent}
-				isLoading={isLoading}
 				setAiOpponent={setAiOpponent}
 				restartGame={restartGame}
 				currentPlayer={currentPlayer}
 			/>
 			<FieldContainer
 				{...fieldProps}
-				isDraw={isDraw}
-				gameOver={gameOver}
-				isLoading={isLoading}
 				currentPlayer={currentPlayer}
 			/>
 		</div>
@@ -40,10 +31,7 @@ export const GameLayout = ({
 }
 
 GameLayout.propTypes = {
-	isDraw: PropTypes.bool,
 	isDirty: PropTypes.bool,
-	gameOver: PropTypes.bool,
-	isLoading: PropTypes.bool,
 	isAiOpponent: PropTypes.bool.isRequired,
 	setAiOpponent: PropTypes.func.isRequired,
 	restartGame: PropTypes.func.isRequired,

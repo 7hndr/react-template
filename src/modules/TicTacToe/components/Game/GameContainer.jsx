@@ -1,21 +1,21 @@
 import { useState, useEffect, useCallback } from 'react'
 
-import { FIELD_SIZE, INITIAL_FIELD, WIN_PATTERNS, PLAYERS } from '../../config'
+import { FIELD_SIZE, WIN_PATTERNS, PLAYERS } from '../../config'
 import { GameLayout } from './GameLayout'
+import store from '../../../../store'
+import {
+	randomInRange,
+	getEmptyIndexList,
+	getRandomEmptyIndex
+} from '../../helpers'
+import {
+	changeDrawState,
+	setLoading,
+	setGameField,
+	setGameOverState
+} from '../../config/store'
 
-// --------------------------------------------------------------
-
-const randomInRange = (min, max) =>
-	Math.floor(Math.random() * (max - min + 1)) + min
-
-const getEmptyIndexList = field =>
-	field.reduce((a, c, i) => (c?.id ? a : [...a, i]), [])
-
-const getRandomEmptyIndex = field => {
-	const emptyList = getEmptyIndexList(field)
-	const randomIndex = randomInRange(0, emptyList.length - 1)
-	return emptyList[randomIndex]
-}
+//  ← — — — — — — — — — — — — {{ 🗲 }} — — — — — — — — — — — — → //
 
 const getMissingIndexToWin = (field, playerId) => {
 	const emptyIndexList = getEmptyIndexList(field)
@@ -30,7 +30,7 @@ const getMissingIndexToWin = (field, playerId) => {
 		const opponentNeededToWin = []
 
 		pattern.forEach(i => {
-			if (field[i]?.id === playerId) {
+			if (field[i] === playerId) {
 				opponentMatchedIndexCount++
 			} else {
 				opponentNeededToWin.push(i)
@@ -50,27 +50,24 @@ const getMissingIndexToWin = (field, playerId) => {
 	return targetIndex
 }
 
-// --------------------------------------------------------------
+//  ← — — — — — — — — — — — — {{ 🗲 }} — — — — — — — — — — — — → //
 
 export const GameContainer = () => {
-	const [isDraw, setDrawState] = useState(false)
-	const [gameOver, setGameOver] = useState(false)
-	const [isLoading, setLoading] = useState(false)
 	const [isDirty, setDirtyState] = useState(false)
-	const [field, setField] = useState(INITIAL_FIELD)
+	const [field, setField] = useState(store.getState().ticTacToeReducer.field)
 	const [isAiOpponent, setAiOpponent] = useState(true)
 	const [activeWinPattern, setActiveWinPattern] = useState(null)
 	const [currentPlayer, setCurrentPlayer] = useState(PLAYERS.PLAYER_1)
 
-	// --------------------------------------------------------------
+	//  ← — — — — — — — — — — — — {{ 🗲 }} — — — — — — — — — — — — → //
 
 	const restartGame = () => {
-		setLoading(false)
-		setGameOver(false)
-		setDrawState(false)
+		store.dispatch(setGameOverState(false))
+		store.dispatch(changeDrawState(false))
+		store.dispatch(setLoading(false))
 		setAiOpponent(true)
 		setDirtyState(false)
-		setField(INITIAL_FIELD)
+		store.dispatch(setGameField())
 		setActiveWinPattern(null)
 		setCurrentPlayer(PLAYERS.PLAYER_1)
 	}
@@ -78,18 +75,24 @@ export const GameContainer = () => {
 	const cellClickHandler = useCallback(
 		async (i, delay) => {
 			if (delay) {
-				setLoading(true)
+				store.dispatch(setLoading(true))
 				await new Promise(r => setTimeout(() => r(), delay))
 			}
-			if (gameOver || !!field[i]?.id) return
 
-			const uipdatedField = field.toSpliced(i, 1, currentPlayer)
+			if (
+				store.getState().ticTacToeReducer.isGameOver ||
+				!!Number.isInteger(field[i])
+			)
+				return
 
-			setField(() => uipdatedField)
+			const updatedField = field.toSpliced(i, 1, currentPlayer.id)
+
+			store.dispatch(setGameField(updatedField))
+
 			setDirtyState(true)
 
-			const currentUserFilledLength = uipdatedField.filter(
-				f => f?.id === currentPlayer?.id
+			const currentUserFilledLength = updatedField.filter(
+				cell => cell === currentPlayer?.id
 			)?.length
 
 			let hasWinner = false
@@ -99,7 +102,7 @@ export const GameContainer = () => {
 
 				while (!hasWinner) {
 					hasWinner = WIN_PATTERNS[i].every(
-						ndx => uipdatedField[ndx]?.id === currentPlayer?.id
+						ndx => updatedField[ndx] === currentPlayer?.id
 					)
 
 					if (hasWinner) setActiveWinPattern(WIN_PATTERNS[i])
@@ -113,18 +116,19 @@ export const GameContainer = () => {
 			}
 
 			const fieldIsFilled =
-				uipdatedField.filter(f => !!f?.id).length === FIELD_SIZE
+				updatedField.filter(cell => Number.isInteger(cell)).length ===
+				FIELD_SIZE
 
 			if (hasWinner) {
 				// WIN
 
-				setGameOver(true)
+				store.dispatch(setGameOverState(true))
 			} else if (fieldIsFilled) {
 				// DRAW
 
-				setGameOver(true)
-				setDrawState(true)
-				setLoading(false)
+				store.dispatch(setGameOverState(true))
+				store.dispatch(changeDrawState(true))
+				store.dispatch(setLoading(false))
 				return
 			} else {
 				// NEXT
@@ -135,9 +139,9 @@ export const GameContainer = () => {
 				)
 			}
 
-			setLoading(false)
+			store.dispatch(setLoading(false))
 		},
-		[currentPlayer, field, gameOver]
+		[currentPlayer, field]
 	)
 
 	useEffect(() => {
@@ -151,7 +155,6 @@ export const GameContainer = () => {
 			const aiId = currentPlayer.id
 
 			let targetIndex = null
-
 			const aiToWinIndex = getMissingIndexToWin(field, aiId)
 
 			if (Number.isInteger(aiToWinIndex)) {
@@ -162,25 +165,25 @@ export const GameContainer = () => {
 					getRandomEmptyIndex(field)
 			}
 
-			// --------------------------------------------------------------
+			//  ← — — — — — — — — — — — — {{ 🗲 }} — — — — — — — — — — — — → //
 
 			cellClickHandler(targetIndex, randomThinkTime)
 		}
-	}, [currentPlayer, isDirty, isAiOpponent, field, cellClickHandler])
+	}, [currentPlayer, isDirty, field, isAiOpponent, cellClickHandler])
+
+	useEffect(() => {
+		const unsubscribe = store.subscribe(() => {
+			setField(store.getState().ticTacToeReducer.field)
+		})
+		return () => unsubscribe()
+	}, [])
 
 	return (
 		<GameLayout
-			field={field}
-			isDraw={isDraw}
 			isDirty={isDirty}
-			gameOver={gameOver}
-			setField={setField}
 			isAiOpponent={isAiOpponent}
-			isLoading={isLoading}
 			setAiOpponent={setAiOpponent}
-			setGameOver={setGameOver}
 			restartGame={restartGame}
-			setDrawState={setDrawState}
 			currentPlayer={currentPlayer}
 			activeWinPattern={activeWinPattern}
 			setCurrentPlayer={setCurrentPlayer}

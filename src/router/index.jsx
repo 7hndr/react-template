@@ -5,6 +5,7 @@ import {
 	FaHome,
 	FaRegUser,
 	FaUtensils,
+	FaCircle,
 	FaCalculator
 } from 'react-icons/fa'
 import { Root } from '../layout'
@@ -14,6 +15,7 @@ import {
 	ToDoPage,
 	AuthPage,
 	RecipePage,
+	SpherePage,
 	JPToDoPage,
 	TicTacToePage,
 	CalculatorPage,
@@ -66,6 +68,12 @@ export const routeList = [
 				name: 'Auth',
 				path: '/auth',
 				element: <AuthPage />
+			},
+			{
+				icon: FaCircle,
+				name: 'WebGL Sphere',
+				path: '/webgl-sphere',
+				element: <SpherePage />
 			},
 			{
 				icon: FaList,

@@ -1,17 +1,38 @@
+import { useEffect, useState } from 'react'
+
 import PropTypes from 'prop-types'
+
+import store from '../../../../store'
 
 import { InformationLayout } from '../'
 
 export const InformationContainer = ({
-	isDraw,
 	isDirty,
-	gameOver,
 	isAiOpponent,
-	isLoading,
 	setAiOpponent,
 	restartGame,
 	currentPlayer
 }) => {
+	const [isDraw, setIsDraw] = useState(
+		store.getState().ticTacToeReducer.isDraw
+	)
+	const [isLoading, setIsLoading] = useState(
+		store.getState().ticTacToeReducer.isLoading
+	)
+	const [gameOver, setGameOver] = useState(
+		store.getState().ticTacToeReducer.isGameOver
+	)
+
+	useEffect(() => {
+		const unsubscribe = store.subscribe(() => {
+			setIsDraw(store.getState().ticTacToeReducer.isDraw)
+			setIsLoading(store.getState().ticTacToeReducer.isLoading)
+			setGameOver(store.getState().ticTacToeReducer.isGameOver)
+		})
+
+		return () => unsubscribe()
+	}, [])
+
 	let headerTitle
 
 	if (isDraw) {
@@ -34,10 +55,7 @@ export const InformationContainer = ({
 }
 
 InformationContainer.propTypes = {
-	isDraw: PropTypes.bool,
 	isDirty: PropTypes.bool,
-	gameOver: PropTypes.bool,
-	isLoading: PropTypes.bool,
 	isAiOpponent: PropTypes.bool.isRequired,
 	setAiOpponent: PropTypes.func.isRequired,
 	restartGame: PropTypes.func.isRequired,
