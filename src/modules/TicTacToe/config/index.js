@@ -22,8 +22,9 @@ export const initialState = {
 	isLoading: false,
 	isDraw: false,
 	isGameOver: false,
-	// isAiOpponent: true,
-	// isFieldDirty: false,
-	field: INITIAL_FIELD
-	// currentPlayer: PLAYERS.PLAYER_1
+	isAiOpponent: true,
+	isFieldDirty: false,
+	field: INITIAL_FIELD,
+	currentPlayer: PLAYERS.PLAYER_1.id,
+	activeWinPattern: null
 }

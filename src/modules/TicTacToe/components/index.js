@@ -4,7 +4,6 @@ export * from './Game/GameLayout'
 export * from './Information/InformationContainer'
 export * from './Information/InformationLayout'
 
-export * from './Field/FieldContainer'
-export * from './Field/FieldLayout'
+export * from './Field/Field'
 
 export * from './CellItem/CellItem'
