@@ -3,24 +3,21 @@ import PropTypes from 'prop-types'
 
 import style from './InformationLayout.module.scss'
 import store from '../../../../store'
-import { setAiOpponent } from '../../config/store'
 import { Button, Switch } from '../../../../ui'
 import { FaRedo } from 'react-icons/fa'
 
 export const InformationLayout = ({ headerTitle, restartGame }) => {
-	const [isDirty, setIsDirty] = useState(
-		store.getState().ticTacToeReducer.isFieldDirty
-	)
+	const [isDirty, setIsDirty] = useState(store.getState().isFieldDirty)
 	const [isAiOpponent, setAiStateOpponent] = useState(
-		store.getState().ticTacToeReducer.isAiOpponent
+		store.getState().isAiOpponent
 	)
 
 	//  ← — — — — — — — — — — — — {{ 🗲 }} — — — — — — — — — — — — → //
 
 	useEffect(() => {
 		const unsubscribe = store.subscribe(() => {
-			setIsDirty(store.getState().ticTacToeReducer.isFieldDirty)
-			setAiStateOpponent(store.getState().ticTacToeReducer.isAiOpponent)
+			setIsDirty(store.getState().isFieldDirty)
+			setAiStateOpponent(store.getState().isAiOpponent)
 		})
 
 		return () => unsubscribe()
@@ -39,7 +36,12 @@ export const InformationLayout = ({ headerTitle, restartGame }) => {
 					id='ai-player'
 					label='AI opponent'
 					checked={isAiOpponent}
-					onChange={value => store.dispatch(setAiOpponent(value))}
+					onChange={value =>
+						store.dispatch({
+							type: 'setAiOpponent',
+							payload: value
+						})
+					}
 				/>
 			)}
 		</div>

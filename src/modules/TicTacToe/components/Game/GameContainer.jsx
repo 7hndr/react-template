@@ -7,39 +7,28 @@ import {
 	getRandomEmptyIndex,
 	getMissingIndexToWin
 } from '../../helpers'
-import {
-	makeStep,
-	setLoading,
-	setGameField,
-	setAiOpponent,
-	setDirtyState,
-	changeDrawState,
-	setCurrentPlayer,
-	setGameOverState,
-	setActiveWinPattern
-} from '../../config/store'
 
 //  ← — — — — — — — — — — — — {{ 🗲 }} — — — — — — — — — — — — → //
 
 export const GameContainer = () => {
 	const [currentPlayerId, setCurrentPlayerId] = useState(
-		store.getState().ticTacToeReducer.currentPlayer
+		store.getState().currentPlayer
 	)
 
 	const restartGame = () => {
-		store.dispatch(setGameOverState(false))
-		store.dispatch(changeDrawState(false))
-		store.dispatch(setLoading(false))
-		store.dispatch(setAiOpponent(true))
-		store.dispatch(setGameField())
-		store.dispatch(setDirtyState(false))
-		store.dispatch(setActiveWinPattern(null))
-		store.dispatch(setCurrentPlayer())
+		store.dispatch({ type: 'setGameOverState', payload: false })
+		store.dispatch({ type: 'changeDrawState', payload: false })
+		store.dispatch({ type: 'setLoading', payload: false })
+		store.dispatch({ type: 'setAiOpponent', payload: true })
+		store.dispatch({ type: 'setGameField' })
+		store.dispatch({ type: 'setDirtyState', payload: false })
+		store.dispatch({ type: 'setActiveWinPattern', payload: null })
+		store.dispatch({ type: 'setCurrentPlayer' })
 	}
 
 	const makeAiStep = useCallback(async () => {
 		const { isFieldDirty, isAiOpponent, currentPlayer, field } =
-			store.getState().ticTacToeReducer
+			store.getState()
 
 		if (
 			isFieldDirty &&
@@ -48,9 +37,9 @@ export const GameContainer = () => {
 		) {
 			// — — Imitation of thinking delay — —
 			const randomThinkTime = randomInRange(64, 768)
-			store.dispatch(setLoading(true))
+			store.dispatch({ type: 'setLoading', payload: true })
 			await new Promise(r => setTimeout(() => r(), randomThinkTime))
-			store.dispatch(setLoading(false))
+			store.dispatch({ type: 'setLoading', payload: false })
 			// — — End of imitation — —
 
 			let targetIndex = null
@@ -64,7 +53,7 @@ export const GameContainer = () => {
 					getRandomEmptyIndex(field)
 			}
 
-			store.dispatch(makeStep(targetIndex))
+			store.dispatch({ type: 'makeStep', payload: targetIndex })
 		}
 	}, [])
 
@@ -74,7 +63,7 @@ export const GameContainer = () => {
 
 	useEffect(() => {
 		const unsubscribe = store.subscribe(() => {
-			setCurrentPlayerId(store.getState().ticTacToeReducer.currentPlayer)
+			setCurrentPlayerId(store.getState().currentPlayer)
 		})
 		return () => unsubscribe()
 	}, [])

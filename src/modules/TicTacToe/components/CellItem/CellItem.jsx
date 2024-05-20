@@ -1,7 +1,6 @@
 import PropTypes from 'prop-types'
 import styles from './CellItem.module.scss'
 import { PLAYERS } from '../../config'
-import { makeStep } from '../../config/store'
 import store from '../../../../store'
 
 export const CellItem = ({ cellId, index, noHover, isItemDisabled }) => {
@@ -13,7 +12,12 @@ export const CellItem = ({ cellId, index, noHover, isItemDisabled }) => {
 			className={`${styles.cell} ${
 				isItemDisabled ? styles.disabledCell : ''
 			} ${noHover ? styles.noHover : ''}`}
-			onClick={() => store.dispatch(makeStep(index))}
+			onClick={() =>
+				store.dispatch({
+					type: 'makeStep',
+					payload: index
+				})
+			}
 		>
 			{IconComponent && (
 				<IconComponent

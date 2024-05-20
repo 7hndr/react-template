@@ -1,12 +1,6 @@
-import { configureStore, combineReducers } from '@reduxjs/toolkit'
-import ticTacToeReducer from '../modules/TicTacToe/config/store'
+// DEPRECATED below
+import { legacy_createStore } from 'redux'
+import { ticTacToeReducer } from '../modules/TicTacToe/config/store'
 
-const rootReducer = combineReducers({
-	ticTacToeReducer
-})
-
-const store = configureStore({
-	reducer: rootReducer
-})
-
+let store = legacy_createStore(ticTacToeReducer)
 export default store

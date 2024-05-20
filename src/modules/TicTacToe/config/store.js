@@ -1,115 +1,79 @@
-import { createSlice } from '@reduxjs/toolkit'
 import { initialState, WIN_PATTERNS, FIELD_SIZE, PLAYERS } from './'
 
-const ticTacToeSlice = createSlice({
-	name: 'ticTacToe',
-	initialState,
-	reducers: {
-		changeDrawState: (state, action) => {
-			state.isDraw = action.payload ?? !state.isDraw
-		},
-		setLoading: (state, action) => {
-			state.isLoading = action.payload ?? !state.isLoading
-		},
-		setGameOverState: (state, action) => {
-			state.isGameOver = action.payload ?? !state.isGameOver
-		},
-		setGameField: (state, action) => {
-			state.field = action.payload ?? initialState.field
-		},
-		setActiveWinPattern: (state, action) => {
-			state.activeWinPattern = action.payload
-		},
-		setCurrentPlayer: (state, action) => {
-			state.currentPlayer = action.payload ?? PLAYERS.PLAYER_1.id
-		},
-		setDirtyState: (state, action) => {
-			state.isFieldDirty = action.payload ?? !state.isFieldDirty
-		},
-		setAiOpponent: (state, action) => {
-			state.isAiOpponent = action.payload ?? !state.isAiOpponent
-		},
-		makeStep: (state, action) => {
-			const i = action.payload
+const makePlayerStep = (state, i) => {
+	if (state.isGameOver || Number.isInteger(state.field[i])) return state
 
-			if (
-				!!state.isGameOver ||
-				!!Number.isInteger(Array.from(state.field)[i])
-			)
-				return
+	const updatedField = state.field.toSpliced(i, 1, state.currentPlayer)
 
-			const updatedField = state.field.toSpliced(
-				i,
-				1,
-				state.currentPlayer
+	// state.field = updatedField
+
+	const currentUserFilledLength = updatedField.filter(
+		cell => cell === state.currentPlayer
+	)?.length
+
+	let hasWinner = false
+	let activeWinPattern = null
+
+	if (currentUserFilledLength >= 3) {
+		let i = 0
+
+		while (!hasWinner) {
+			hasWinner = WIN_PATTERNS[i].every(
+				ndx => updatedField[ndx] === state.currentPlayer
 			)
 
-			state.field = updatedField
+			if (hasWinner) activeWinPattern = WIN_PATTERNS[i]
 
-			state.isFieldDirty = true
-
-			const currentUserFilledLength = updatedField.filter(
-				cell => cell === state.currentPlayer
-			)?.length
-
-			let hasWinner = false
-
-			if (currentUserFilledLength >= 3) {
-				let i = 0
-
-				while (!hasWinner) {
-					hasWinner = WIN_PATTERNS[i].every(
-						ndx => updatedField[ndx] === state.currentPlayer
-					)
-
-					if (hasWinner) state.activeWinPattern = WIN_PATTERNS[i]
-
-					if (hasWinner || i === WIN_PATTERNS.length - 1) {
-						break
-					} else {
-						i++
-					}
-				}
-			}
-
-			const fieldIsFilled =
-				updatedField.filter(cell => Number.isInteger(cell)).length ===
-				FIELD_SIZE
-
-			if (hasWinner) {
-				// WIN
-
-				state.isGameOver = true
-			} else if (fieldIsFilled) {
-				// DRAW
-				state.isGameOver = true
-				state.isDraw = true
-				state.isLoading = true
-				return
+			if (hasWinner || i === WIN_PATTERNS.length - 1) {
+				break
 			} else {
-				// NEXT
-				const { PLAYER_1, PLAYER_2 } = PLAYERS
-
-				state.currentPlayer =
-					state.currentPlayer === PLAYER_1.id
-						? PLAYER_2.id
-						: PLAYER_1.id
+				i++
 			}
-
-			state.isLoading = false
 		}
 	}
-})
 
-export const {
-	makeStep,
-	setLoading,
-	setGameField,
-	setDirtyState,
-	setAiOpponent,
-	changeDrawState,
-	setCurrentPlayer,
-	setGameOverState,
-	setActiveWinPattern
-} = ticTacToeSlice.actions
-export default ticTacToeSlice.reducer
+	const fieldIsFilled =
+		updatedField.filter(cell => Number.isInteger(cell)).length ===
+		FIELD_SIZE
+
+	return {
+		...state,
+		field: updatedField,
+		isFieldDirty: true,
+		currentPlayer:
+			hasWinner || fieldIsFilled
+				? state.currentPlayer
+				: state.currentPlayer === PLAYERS.PLAYER_1.id
+				? PLAYERS.PLAYER_2.id
+				: PLAYERS.PLAYER_1.id,
+		isGameOver: hasWinner || fieldIsFilled,
+		activeWinPattern: hasWinner ? activeWinPattern : null,
+		isDraw: fieldIsFilled && !hasWinner
+	}
+}
+
+export const ticTacToeReducer = (state = initialState, { type, payload }) => {
+	switch (type) {
+		case 'changeDrawState':
+			return { ...state, isDraw: payload ?? !state.isDraw }
+		case 'setAiOpponent':
+			return { ...state, isAiOpponent: payload ?? !state.isAiOpponent }
+		case 'setDirtyState':
+			return { ...state, isFieldDirty: payload ?? !state.isFieldDirty }
+		case 'setLoading':
+			return { ...state, isLoading: payload ?? !state.isLoading }
+		case 'setGameOverState':
+			return { ...state, isGameOver: payload ?? !state.isGameOver }
+		case 'setGameField':
+			return { ...state, field: payload ?? initialState.field }
+		case 'setActiveWinPattern':
+			return { ...state, activeWinPattern: payload }
+		case 'setCurrentPlayer':
+			return { ...state, currentPlayer: payload ?? PLAYERS.PLAYER_1.id }
+		case 'makeStep':
+			return makePlayerStep(state, payload)
+
+		default:
+			return state
+	}
+}

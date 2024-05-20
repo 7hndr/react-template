@@ -4,7 +4,7 @@ import styles from './Field.module.scss'
 import { CellItem } from '../'
 
 export const Field = () => {
-	const getStoreParam = param => store.getState().ticTacToeReducer[param]
+	const getStoreParam = param => store.getState()[param]
 
 	const [field, setField] = useState(getStoreParam('field'))
 	const [isDraw, setIsDraw] = useState(getStoreParam('isDraw'))
