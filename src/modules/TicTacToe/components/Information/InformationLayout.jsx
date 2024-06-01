@@ -1,32 +1,23 @@
-import { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
+import { useSelector, useDispatch } from 'react-redux'
+import { selectFieldByParam } from '../../config/selectors.js'
+import { setAiOpponent } from '../../config/actions.js'
 
 import style from './InformationLayout.module.scss'
-import store from '../../../../store'
 import { Button, Switch } from '../../../../ui'
 import { FaRedo } from 'react-icons/fa'
 
 export const InformationLayout = ({ headerTitle, restartGame }) => {
-	const [isDirty, setIsDirty] = useState(store.getState().isFieldDirty)
-	const [isAiOpponent, setAiStateOpponent] = useState(
-		store.getState().isAiOpponent
-	)
+	const dispatch = useDispatch()
+	const isFieldDirty = useSelector(selectFieldByParam('isFieldDirty'))
+	const isAiOpponent = useSelector(selectFieldByParam('isAiOpponent'))
 
 	//  ← — — — — — — — — — — — — {{ 🗲 }} — — — — — — — — — — — — → //
-
-	useEffect(() => {
-		const unsubscribe = store.subscribe(() => {
-			setIsDirty(store.getState().isFieldDirty)
-			setAiStateOpponent(store.getState().isAiOpponent)
-		})
-
-		return () => unsubscribe()
-	}, [])
 
 	return (
 		<div className={style.header}>
 			<h2>{headerTitle}</h2>
-			{isDirty ? (
+			{isFieldDirty ? (
 				<Button onClick={restartGame}>
 					<FaRedo />
 					Restart
@@ -36,12 +27,7 @@ export const InformationLayout = ({ headerTitle, restartGame }) => {
 					id='ai-player'
 					label='AI opponent'
 					checked={isAiOpponent}
-					onChange={value =>
-						store.dispatch({
-							type: 'setAiOpponent',
-							payload: value
-						})
-					}
+					onChange={value => dispatch(setAiOpponent(value))}
 				/>
 			)}
 		</div>

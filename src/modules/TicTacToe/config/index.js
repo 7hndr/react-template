@@ -17,14 +17,3 @@ export const PLAYERS = {
 	PLAYER_1: { id: 1, name: 'Chorme', icon: FaChrome },
 	PLAYER_2: { id: 2, name: 'IE', icon: FaInternetExplorer }
 }
-
-export const initialState = {
-	isLoading: false,
-	isDraw: false,
-	isGameOver: false,
-	isAiOpponent: true,
-	isFieldDirty: false,
-	field: INITIAL_FIELD,
-	currentPlayer: PLAYERS.PLAYER_1.id,
-	activeWinPattern: null
-}

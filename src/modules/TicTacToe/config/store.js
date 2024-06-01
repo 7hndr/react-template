@@ -1,4 +1,15 @@
-import { initialState, WIN_PATTERNS, FIELD_SIZE, PLAYERS } from './'
+import { INITIAL_FIELD, WIN_PATTERNS, FIELD_SIZE, PLAYERS } from './'
+
+const initialState = {
+	isLoading: false,
+	isDraw: false,
+	isGameOver: false,
+	isAiOpponent: true,
+	isFieldDirty: false,
+	field: INITIAL_FIELD,
+	currentPlayer: PLAYERS.PLAYER_1.id,
+	activeWinPattern: null
+}
 
 const makePlayerStep = (state, i) => {
 	if (state.isGameOver || Number.isInteger(state.field[i])) return state

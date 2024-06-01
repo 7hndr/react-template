@@ -1,9 +1,11 @@
 import PropTypes from 'prop-types'
 import styles from './CellItem.module.scss'
 import { PLAYERS } from '../../config'
-import store from '../../../../store'
+import { useDispatch } from 'react-redux'
+import { makeStep } from '../../config/actions.js'
 
 export const CellItem = ({ cellId, index, noHover, isItemDisabled }) => {
+	const dispatch = useDispatch()
 	const playersArr = Object.values(PLAYERS)
 	const IconComponent = playersArr.find(p => p.id === cellId)?.icon
 
@@ -12,12 +14,7 @@ export const CellItem = ({ cellId, index, noHover, isItemDisabled }) => {
 			className={`${styles.cell} ${
 				isItemDisabled ? styles.disabledCell : ''
 			} ${noHover ? styles.noHover : ''}`}
-			onClick={() =>
-				store.dispatch({
-					type: 'makeStep',
-					payload: index
-				})
-			}
+			onClick={() => dispatch(makeStep(index))}
 		>
 			{IconComponent && (
 				<IconComponent
