@@ -4,11 +4,14 @@ import {
 	applyMiddleware,
 	compose
 } from 'redux'
-import { ticTacToeReducer } from '../modules/TicTacToe/config/store'
 import { thunk } from 'redux-thunk'
 
+import { ticTacToeReducer } from '../modules/TicTacToe/config/store'
+import { todoReducer } from '../modules/JServerToDo/config/store'
+
 const reducer = combineReducers({
-	ticTacToe: ticTacToeReducer
+	ticTacToe: ticTacToeReducer,
+	todo: todoReducer
 })
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose

@@ -50,6 +50,7 @@ export const makeStep = payload => ({
 	payload
 })
 
+// async
 export const makeAiStep = () => async (dispatch, getState) => {
 	const state = getState().ticTacToe
 
@@ -60,7 +61,6 @@ export const makeAiStep = () => async (dispatch, getState) => {
 	) {
 		// — — Imitation of AI thinking delay — —
 		dispatch(setLoading(true))
-
 		await new Promise(r => setTimeout(r, randomInRange(64, 768)))
 		dispatch(setLoading(false))
 		// — — End of imitation — —

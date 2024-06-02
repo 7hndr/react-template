@@ -1,14 +1,14 @@
 import styles from './Field.module.scss'
 import { CellItem } from '../'
-import { selectFieldByParam } from '../../config/selectors.js'
+import { selectFieldByKey } from '../../config/selectors.js'
 import { useSelector } from 'react-redux'
 
 export const Field = () => {
-	const field = useSelector(selectFieldByParam('field'))
-	const isDraw = useSelector(selectFieldByParam('isDraw'))
-	const isLoading = useSelector(selectFieldByParam('isLoading'))
-	const isGameOver = useSelector(selectFieldByParam('isGameOver'))
-	const activeWinPattern = useSelector(selectFieldByParam('activeWinPattern'))
+	const field = useSelector(selectFieldByKey('field'))
+	const isDraw = useSelector(selectFieldByKey('isDraw'))
+	const isLoading = useSelector(selectFieldByKey('isLoading'))
+	const isGameOver = useSelector(selectFieldByKey('isGameOver'))
+	const activeWinPattern = useSelector(selectFieldByKey('activeWinPattern'))
 
 	//  ← — — — — — — — — — — — — {{ 🗲 }} — — — — — — — — — — — — → //
 

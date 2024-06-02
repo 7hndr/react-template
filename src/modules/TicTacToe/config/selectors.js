@@ -1,1 +1,1 @@
-export const selectFieldByParam = param => state => state.ticTacToe[param]
+export const selectFieldByKey = key => state => state.ticTacToe[key]

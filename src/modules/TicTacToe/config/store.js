@@ -16,8 +16,6 @@ const makePlayerStep = (state, i) => {
 
 	const updatedField = state.field.toSpliced(i, 1, state.currentPlayer)
 
-	// state.field = updatedField
-
 	const currentUserFilledLength = updatedField.filter(
 		cell => cell === state.currentPlayer
 	)?.length

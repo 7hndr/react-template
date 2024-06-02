@@ -1,5 +1,5 @@
 import { useSelector } from 'react-redux'
-import { selectFieldByParam } from '../../config/selectors.js'
+import { selectFieldByKey } from '../../config/selectors.js'
 
 import PropTypes from 'prop-types'
 
@@ -8,10 +8,10 @@ import { PLAYERS } from '../../config'
 import { InformationLayout } from '../'
 
 export const InformationContainer = ({ restartGame }) => {
-	const isDraw = useSelector(selectFieldByParam('isDraw'))
-	const isLoading = useSelector(selectFieldByParam('isLoading'))
-	const currentPlayer = useSelector(selectFieldByParam('currentPlayer'))
-	const isGameOver = useSelector(selectFieldByParam('isGameOver'))
+	const isDraw = useSelector(selectFieldByKey('isDraw'))
+	const isLoading = useSelector(selectFieldByKey('isLoading'))
+	const currentPlayer = useSelector(selectFieldByKey('currentPlayer'))
+	const isGameOver = useSelector(selectFieldByKey('isGameOver'))
 
 	const playersArr = Object.values(PLAYERS)
 

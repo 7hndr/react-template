@@ -1,13 +1,14 @@
 import { POST } from '../../../api'
+import { setLoading } from '../config/actions'
 
-export const useCreateTodo = ({ getTodoList, url, setIsLoading }) => {
+export const useCreateTodo = ({ getTodoList, url, dispatch }) => {
 	const createTodo = async () => {
 		try {
 			const title = prompt('Enter title')
 			if (!title) return
 			const description = prompt('Enter description (not required)')
 
-			setIsLoading(true)
+			dispatch(setLoading(true))
 			await POST(url, {
 				title,
 				description,
@@ -17,7 +18,7 @@ export const useCreateTodo = ({ getTodoList, url, setIsLoading }) => {
 		} catch (e) {
 			throw new Error(e)
 		} finally {
-			setIsLoading(false)
+			dispatch(setLoading(false))
 			getTodoList && getTodoList()
 		}
 	}

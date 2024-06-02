@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { GameLayout } from './GameLayout'
 import { useSelector, useDispatch } from 'react-redux'
-import { selectFieldByParam } from '../../config/selectors.js'
+import { selectFieldByKey } from '../../config/selectors.js'
 import {
 	changeDrawState,
 	setGameOverState,
@@ -19,8 +19,9 @@ import {
 export const GameContainer = () => {
 	const dispatch = useDispatch()
 
-	const currentPlayer = useSelector(selectFieldByParam('currentPlayer'))
+	const currentPlayer = useSelector(selectFieldByKey('currentPlayer'))
 
+	// TODO: move to actions
 	const restartGame = () => {
 		dispatch(changeDrawState(false))
 		dispatch(setGameOverState(false))

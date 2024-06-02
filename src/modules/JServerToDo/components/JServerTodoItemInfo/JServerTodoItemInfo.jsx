@@ -1,21 +1,24 @@
-import { useContext } from 'react'
-import { todoItemContext } from '../../context'
-
 import styles from './JServerTodoItemInfo.module.scss'
-import { FaRegEdit } from 'react-icons/fa'
+import { useDispatch, useSelector } from 'react-redux'
+
 import { Button } from '../../../../ui'
+import { FaRegEdit } from 'react-icons/fa'
+
+import { setEditing } from '../../config/actions'
+import { selectFieldByKey } from '../../config/store'
 
 export const JServerTodoItemInfo = () => {
-	const { todoItem, setEditState } = useContext(todoItemContext)
+	const dispatch = useDispatch()
+	const selectedTodo = useSelector(selectFieldByKey('selectedTodo'))
 
 	return (
 		<div className={styles.wrapper}>
-			<h1 className={styles.title}>{todoItem.title}</h1>
-			<p className={styles.desc}>{todoItem.description}</p>
+			<h1 className={styles.title}>{selectedTodo.title}</h1>
+			<p className={styles.desc}>{selectedTodo.description}</p>
 			<Button
 				className={styles.controls}
 				simple
-				onClick={() => setEditState(true)}
+				onClick={() => dispatch(setEditing(true))}
 			>
 				<FaRegEdit />
 			</Button>

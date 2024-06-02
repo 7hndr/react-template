@@ -1,9 +1,16 @@
+import styles from './JServerToDoList.module.scss'
+
+import { useEffect, useRef } from 'react'
+import { NavLink } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
+
 import {
 	FaRegCircle,
 	FaRegCheckCircle,
 	FaSortAlphaDown,
 	FaPlus
 } from 'react-icons/fa'
+import { Button, Input } from '../../../../ui'
 
 import {
 	sortByField,
@@ -11,63 +18,68 @@ import {
 	parseTimeStampToDate
 } from '../../../../helpers'
 
-import styles from './JServerToDoList.module.scss'
-import { Button, Input } from '../../../../ui'
-import { useState, useEffect, useRef } from 'react'
-
+import { selectFieldByKey } from '../../config/store'
 import {
 	useCreateTodo,
 	useGetTodoList,
 	useToggleCompletedTodo
 } from '../../hooks'
+import {
+	setSorting,
+	setFilterText,
+	setFilteredList
+} from '../../config/actions'
 
-import { NavLink } from 'react-router-dom'
+//  ← — — — — — — — — — — — — {{ 🗲 }} — — — — — — — — — — — — → //
 
 const TODO_URL = 'http://localhost:3004/todos'
 
 export const JServerToDoList = () => {
-	const [isLoading, setIsLoading] = useState(true)
-	const [isSorted, setIsSorted] = useState(false)
-	const [filterText, setFilterText] = useState('')
-	const [originTodoList, setOriginTodoList] = useState([])
-	const [filteredTodoList, setFilteredTodoList] = useState(originTodoList)
+	const dispatch = useDispatch()
+
+	const originTodoList = useSelector(selectFieldByKey('list'))
+	const isLoading = useSelector(selectFieldByKey('isLoading'))
+	const isSorted = useSelector(selectFieldByKey('isSorted'))
+	const filterText = useSelector(selectFieldByKey('filterText'))
+	const filteredList = useSelector(selectFieldByKey('filteredList'))
+
 	const searchRef = useRef()
 
 	const onSearchChange = debounce(({ target }) => {
-		setFilterText(target.value.toLowerCase())
+		dispatch(setFilterText(target.value.toLowerCase()))
 	}, 256)
 
 	const sortClickHandler = () => {
-		setIsSorted(!isSorted)
+		dispatch(setSorting(!isSorted))
 	}
 
 	const { getTodoList } = useGetTodoList({
 		url: TODO_URL,
-		setIsLoading,
-		setData: setOriginTodoList
+		dispatch
 	})
 
-	const hooksArgs = { url: TODO_URL, getTodoList, setIsLoading }
+	const hooksArgs = { url: TODO_URL, getTodoList, dispatch }
 
 	const { createTodo } = useCreateTodo(hooksArgs)
 	const { toggleCompletedTodo } = useToggleCompletedTodo(hooksArgs)
 
-	//  ← — — — — — — — — — — — — {{ 🗲 }} — — — — — — — — — — — — → //
-
 	useEffect(() => {
 		if (filterText) {
-			setFilteredTodoList(
-				originTodoList.filter(item =>
-					item.title.toLowerCase().includes(filterText)
+			dispatch(
+				setFilteredList(
+					originTodoList.filter(item =>
+						item.title.toLowerCase().includes(filterText)
+					)
 				)
 			)
 		} else {
-			setFilteredTodoList(originTodoList)
+			dispatch(setFilteredList(originTodoList))
 		}
-	}, [originTodoList, filterText])
+	}, [originTodoList, filterText, dispatch])
 
 	return (
 		<>
+			{}
 			<div className={styles.container}>
 				<div className={styles.header}>
 					<h2>ToDo</h2>
@@ -91,13 +103,13 @@ export const JServerToDoList = () => {
 						<FaPlus />
 					</Button>
 				</div>
-				{filteredTodoList.length ? (
+				{filteredList.length ? (
 					isLoading ? (
 						<span className={styles.noData}>loading...</span>
 					) : (
 						<ul className={styles.list}>
 							{sortByField(
-								filteredTodoList,
+								filteredList,
 								isSorted ? 'title' : 'dt'
 							).map(todo => (
 								<li

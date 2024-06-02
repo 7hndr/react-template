@@ -1,7 +1,7 @@
 import styles from './JServerToDoItem.module.scss'
 
 import { useParams, useNavigate } from 'react-router-dom'
-import { useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 
 import {
 	JServerTodoItemCheckbox,
@@ -10,18 +10,23 @@ import {
 	JServerTodoItemForm,
 	JServerTodoItemInfo
 } from '../'
-import { useGetTodoItem } from '../../hooks'
+
 import { Divider } from '../../../../ui'
+
+import { useGetTodoItem } from '../../hooks'
 import { todoItemContext } from '../../context'
+import { selectFieldByKey } from '../../config/store'
+import { setEditing, setSelected } from '../../config/actions'
+import { useEditTodo, useDeleteTodo, useToggleCompletedTodo } from '../../hooks'
 
 const TODO_URL = 'http://localhost:3004/todos'
 
-import { useEditTodo, useDeleteTodo, useToggleCompletedTodo } from '../../hooks'
-
 export const JServerToDoItem = () => {
-	const [isLoading, setIsLoading] = useState(true)
-	const [editState, setEditState] = useState(false)
-	const [todoItem, setTodoItem] = useState(null)
+	const dispatch = useDispatch()
+
+	const isLoading = useSelector(selectFieldByKey('isLoading'))
+	const isEditing = useSelector(selectFieldByKey('isEditing'))
+	const selectedTodo = useSelector(selectFieldByKey('selectedTodo'))
 
 	const { id } = useParams()
 
@@ -29,32 +34,33 @@ export const JServerToDoItem = () => {
 
 	const goToList = () => navigate('..')
 
-	const hooksArgs = { url: TODO_URL, setIsLoading }
+	const hooksArgs = { url: TODO_URL, dispatch }
 
 	const { getTodoItem } = useGetTodoItem({
-		id,
-		setData: setTodoItem,
-		url: TODO_URL,
-		setIsLoading
+		...hooksArgs,
+		id
 	})
 
 	const { editTodo } = useEditTodo({
 		...hooksArgs,
-		callback: getTodoItem
+		callback: getTodoItem,
+		dispatch
 	})
+
 	const { deleteTodo } = useDeleteTodo({ ...hooksArgs, callback: goToList })
+
 	const { toggleCompletedTodo } = useToggleCompletedTodo({
 		...hooksArgs,
 		callback: getTodoItem
 	})
 
 	const todoChangeFieldHandler = ({ target }) => {
-		setTodoItem({ ...todoItem, [target.name]: target.value })
+		dispatch(setSelected({ ...selectedTodo, [target.name]: target.value }))
 	}
 
 	const todoSaveHandler = () => {
-		editTodo(todoItem).then(() => {
-			setEditState(false)
+		editTodo(selectedTodo).then(() => {
+			dispatch(setEditing(false))
 		})
 	}
 
@@ -65,16 +71,14 @@ export const JServerToDoItem = () => {
 
 	return isLoading ? (
 		<Loader />
-	) : !todoItem ? (
+	) : !selectedTodo ? (
 		<UnknownId />
 	) : (
 		<todoItemContext.Provider
 			value={{
-				todoItem,
 				todoChangeFieldHandler,
 				toggleCompletedTodo,
 				todoSaveHandler,
-				setEditState,
 				deleteTodo,
 				goToList
 			}}
@@ -86,7 +90,7 @@ export const JServerToDoItem = () => {
 
 					<Divider vertical />
 
-					{editState ? (
+					{isEditing ? (
 						<JServerTodoItemForm />
 					) : (
 						<JServerTodoItemInfo />

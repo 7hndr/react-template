@@ -4,21 +4,21 @@
       "id": "1",
       "title": "Eat",
       "description": "Eat description",
-      "completed": false,
+      "completed": true,
       "dt": 1713099761160
     },
     {
       "id": "2",
       "title": "Sleep",
       "description": "Sleep description",
-      "completed": true,
+      "completed": false,
       "dt": 1713099783360
     },
     {
       "id": "3",
       "title": "JDM",
       "description": "JDM description",
-      "completed": false,
+      "completed": true,
       "dt": 1713099883360
     },
     {
@@ -27,20 +27,6 @@
       "description": "Repeat description",
       "dt": 1713111619386,
       "id": "4"
-    },
-    {
-      "id": "703e",
-      "title": "Todo something",
-      "description": "Desc of todo something",
-      "completed": false,
-      "dt": 1715524475728
-    },
-    {
-      "id": "8be5",
-      "title": "Lorem ipsum",
-      "description": "...dolor sit amet consectetur adipisicing elit. Praesentium similique quod deleniti ipsum.",
-      "completed": false,
-      "dt": 1715517410457
     }
   ]
 }

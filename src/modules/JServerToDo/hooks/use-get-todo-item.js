@@ -1,17 +1,19 @@
 import { useCallback, useEffect } from 'react'
 import { GET } from '../../../api'
+import { setSelected, setLoading } from '../config/actions'
 
-export const useGetTodoItem = ({ id, setData, url, setIsLoading }) => {
-	const getTodoItem = useCallback(() => {
-		setIsLoading(true)
-
-		GET(`${url}/${id}`)
-			.then(data => setData(data || []))
-			.catch(e => {
-				throw new Error(e)
-			})
-			.finally(() => setIsLoading(false))
-	}, [setData, url, setIsLoading, id])
+export const useGetTodoItem = ({ id, url, dispatch }) => {
+	const getTodoItem = useCallback(async () => {
+		try {
+			dispatch(setLoading(true))
+			const data = await GET(`${url}/${id}`)
+			dispatch(setSelected(data))
+		} catch (e) {
+			throw new Error(e)
+		} finally {
+			dispatch(setLoading(false))
+		}
+	}, [url, dispatch, id])
 
 	useEffect(() => {
 		getTodoItem()

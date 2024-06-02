@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 import { useSelector, useDispatch } from 'react-redux'
-import { selectFieldByParam } from '../../config/selectors.js'
+import { selectFieldByKey } from '../../config/selectors.js'
 import { setAiOpponent } from '../../config/actions.js'
 
 import style from './InformationLayout.module.scss'
@@ -9,8 +9,8 @@ import { FaRedo } from 'react-icons/fa'
 
 export const InformationLayout = ({ headerTitle, restartGame }) => {
 	const dispatch = useDispatch()
-	const isFieldDirty = useSelector(selectFieldByParam('isFieldDirty'))
-	const isAiOpponent = useSelector(selectFieldByParam('isAiOpponent'))
+	const isFieldDirty = useSelector(selectFieldByKey('isFieldDirty'))
+	const isAiOpponent = useSelector(selectFieldByKey('isAiOpponent'))
 
 	//  ← — — — — — — — — — — — — {{ 🗲 }} — — — — — — — — — — — — → //
 
