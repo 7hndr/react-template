@@ -19,27 +19,24 @@ import {
 } from '../../../../helpers'
 
 import { selectFieldByKey } from '../../config/store'
-import {
-	useCreateTodo,
-	useGetTodoList,
-	useToggleCompletedTodo
-} from '../../hooks'
+
 import {
 	setSorting,
+	setTodoList,
 	setFilterText,
-	setFilteredList
+	createTodoItem,
+	setFilteredList,
+	toggleIsCompletedTodoItemInList
 } from '../../config/actions'
 
 //  ← — — — — — — — — — — — — {{ 🗲 }} — — — — — — — — — — — — → //
 
-const TODO_URL = 'http://localhost:3004/todos'
-
 export const JServerToDoList = () => {
 	const dispatch = useDispatch()
 
-	const originTodoList = useSelector(selectFieldByKey('list'))
-	const isLoading = useSelector(selectFieldByKey('isLoading'))
 	const isSorted = useSelector(selectFieldByKey('isSorted'))
+	const isLoading = useSelector(selectFieldByKey('isLoading'))
+	const originTodoList = useSelector(selectFieldByKey('list'))
 	const filterText = useSelector(selectFieldByKey('filterText'))
 	const filteredList = useSelector(selectFieldByKey('filteredList'))
 
@@ -52,16 +49,6 @@ export const JServerToDoList = () => {
 	const sortClickHandler = () => {
 		dispatch(setSorting(!isSorted))
 	}
-
-	const { getTodoList } = useGetTodoList({
-		url: TODO_URL,
-		dispatch
-	})
-
-	const hooksArgs = { url: TODO_URL, getTodoList, dispatch }
-
-	const { createTodo } = useCreateTodo(hooksArgs)
-	const { toggleCompletedTodo } = useToggleCompletedTodo(hooksArgs)
 
 	useEffect(() => {
 		if (filterText) {
@@ -76,6 +63,10 @@ export const JServerToDoList = () => {
 			dispatch(setFilteredList(originTodoList))
 		}
 	}, [originTodoList, filterText, dispatch])
+
+	useEffect(() => {
+		dispatch(setTodoList())
+	}, [dispatch])
 
 	return (
 		<>
@@ -98,7 +89,7 @@ export const JServerToDoList = () => {
 					</Button>
 					<Button
 						square
-						onClick={createTodo}
+						onClick={() => dispatch(createTodoItem())}
 					>
 						<FaPlus />
 					</Button>
@@ -123,7 +114,11 @@ export const JServerToDoList = () => {
 											className={styles.listItemCheckbox}
 											simple
 											onClick={() =>
-												toggleCompletedTodo(todo)
+												dispatch(
+													toggleIsCompletedTodoItemInList(
+														todo
+													)
+												)
 											}
 										>
 											{todo.completed ? (

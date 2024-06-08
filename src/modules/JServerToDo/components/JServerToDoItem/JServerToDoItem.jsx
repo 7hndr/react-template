@@ -2,6 +2,7 @@ import styles from './JServerToDoItem.module.scss'
 
 import { useParams, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
+import { useEffect } from 'react'
 
 import {
 	JServerTodoItemCheckbox,
@@ -13,13 +14,9 @@ import {
 
 import { Divider } from '../../../../ui'
 
-import { useGetTodoItem } from '../../hooks'
 import { todoItemContext } from '../../context'
 import { selectFieldByKey } from '../../config/store'
-import { setEditing, setSelected } from '../../config/actions'
-import { useEditTodo, useDeleteTodo, useToggleCompletedTodo } from '../../hooks'
-
-const TODO_URL = 'http://localhost:3004/todos'
+import { setTodoItem } from '../../config/actions'
 
 export const JServerToDoItem = () => {
 	const dispatch = useDispatch()
@@ -34,35 +31,9 @@ export const JServerToDoItem = () => {
 
 	const goToList = () => navigate('..')
 
-	const hooksArgs = { url: TODO_URL, dispatch }
-
-	const { getTodoItem } = useGetTodoItem({
-		...hooksArgs,
-		id
-	})
-
-	const { editTodo } = useEditTodo({
-		...hooksArgs,
-		callback: getTodoItem,
-		dispatch
-	})
-
-	const { deleteTodo } = useDeleteTodo({ ...hooksArgs, callback: goToList })
-
-	const { toggleCompletedTodo } = useToggleCompletedTodo({
-		...hooksArgs,
-		callback: getTodoItem
-	})
-
-	const todoChangeFieldHandler = ({ target }) => {
-		dispatch(setSelected({ ...selectedTodo, [target.name]: target.value }))
-	}
-
-	const todoSaveHandler = () => {
-		editTodo(selectedTodo).then(() => {
-			dispatch(setEditing(false))
-		})
-	}
+	useEffect(() => {
+		dispatch(setTodoItem(id))
+	}, [dispatch, id])
 
 	//  ← — — — — — — — — — — — — {{ 🗲 }} — — — — — — — — — — — — → //
 
@@ -76,10 +47,6 @@ export const JServerToDoItem = () => {
 	) : (
 		<todoItemContext.Provider
 			value={{
-				todoChangeFieldHandler,
-				toggleCompletedTodo,
-				todoSaveHandler,
-				deleteTodo,
 				goToList
 			}}
 		>

@@ -1,21 +1,21 @@
 import styles from './JServerTodoItemForm.module.scss'
 
-import { useContext } from 'react'
-import { useSelector } from 'react-redux'
-
-import { todoItemContext } from '../../context'
+import { useSelector, useDispatch } from 'react-redux'
 
 import { FaRegSave } from 'react-icons/fa'
 
 import { Input, Button } from '../../../../ui'
 
 import { selectFieldByKey } from '../../config/store'
+import { updateTodoItem, setSelected } from '../../config/actions'
 
 export const JServerTodoItemForm = () => {
+	const dispatch = useDispatch()
 	const selectedTodo = useSelector(selectFieldByKey('selectedTodo'))
 
-	const { todoChangeFieldHandler, todoSaveHandler } =
-		useContext(todoItemContext)
+	const todoChangeFieldHandler = ({ target }) => {
+		dispatch(setSelected({ ...selectedTodo, [target.name]: target.value }))
+	}
 
 	return (
 		<div className={styles.wrapper}>
@@ -36,7 +36,7 @@ export const JServerTodoItemForm = () => {
 			<Button
 				className={styles.controls}
 				simple
-				onClick={todoSaveHandler}
+				onClick={() => dispatch(updateTodoItem(selectedTodo))}
 			>
 				<FaRegSave />
 			</Button>

@@ -1,21 +1,20 @@
-import { useContext } from 'react'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 
 import { Button } from '../../../../ui'
 
 import { FaRegCheckCircle, FaRegCircle } from 'react-icons/fa'
-import { todoItemContext } from '../../context'
 import { selectFieldByKey } from '../../config/store'
 
-export const JServerTodoItemCheckbox = () => {
-	const selectedTodo = useSelector(selectFieldByKey('selectedTodo'))
+import { toggleIsCompletedTodoItem } from '../../config/actions'
 
-	const { toggleCompletedTodo } = useContext(todoItemContext)
+export const JServerTodoItemCheckbox = () => {
+	const dispatch = useDispatch()
+	const selectedTodo = useSelector(selectFieldByKey('selectedTodo'))
 
 	return (
 		<Button
 			simple
-			onClick={() => toggleCompletedTodo(selectedTodo)}
+			onClick={() => dispatch(toggleIsCompletedTodoItem(selectedTodo))}
 		>
 			{selectedTodo.completed ? <FaRegCheckCircle /> : <FaRegCircle />}
 		</Button>
