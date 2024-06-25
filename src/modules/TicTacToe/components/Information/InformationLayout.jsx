@@ -1,40 +1,57 @@
+import { Component } from 'react'
 import PropTypes from 'prop-types'
-import { useSelector, useDispatch } from 'react-redux'
+import { connect } from 'react-redux'
 import { selectFieldByKey } from '../../config/selectors.js'
 import { setAiOpponent } from '../../config/actions.js'
 
-import style from './InformationLayout.module.scss'
 import { Button, Switch } from '../../../../ui'
 import { FaRedo } from 'react-icons/fa'
 
-export const InformationLayout = ({ headerTitle, restartGame }) => {
-	const dispatch = useDispatch()
-	const isFieldDirty = useSelector(selectFieldByKey('isFieldDirty'))
-	const isAiOpponent = useSelector(selectFieldByKey('isAiOpponent'))
+//  ← — — — — — — — — — — — — {{ 🗲 }} — — — — — — — — — — — — → //
 
-	//  ← — — — — — — — — — — — — {{ 🗲 }} — — — — — — — — — — — — → //
+class InformationLayoutComponent extends Component {
+	handleSwitchChange = value => {
+		this.props.setAiOpponent(value)
+	}
 
-	return (
-		<div className={style.header}>
-			<h2>{headerTitle}</h2>
-			{isFieldDirty ? (
-				<Button onClick={restartGame}>
-					<FaRedo />
-					Restart
-				</Button>
-			) : (
-				<Switch
-					id='ai-player'
-					label='AI opponent'
-					checked={isAiOpponent}
-					onChange={value => dispatch(setAiOpponent(value))}
-				/>
-			)}
-		</div>
-	)
+	render() {
+		const { headerTitle, restartGame, isFieldDirty, isAiOpponent } =
+			this.props
+
+		return (
+			<div className='grid grid-cols-2 gap-4 h-10 items-center'>
+				<h2>{headerTitle}</h2>
+				{isFieldDirty ? (
+					<Button onClick={restartGame}>
+						<FaRedo />
+						Restart
+					</Button>
+				) : (
+					<Switch
+						id='ai-player'
+						label='AI opponent'
+						checked={isAiOpponent}
+						onChange={this.handleSwitchChange}
+					/>
+				)}
+			</div>
+		)
+	}
 }
 
-InformationLayout.propTypes = {
+InformationLayoutComponent.propTypes = {
 	headerTitle: PropTypes.string,
-	restartGame: PropTypes.func.isRequired
+	restartGame: PropTypes.func.isRequired,
+	isFieldDirty: PropTypes.bool.isRequired,
+	isAiOpponent: PropTypes.bool.isRequired,
+	setAiOpponent: PropTypes.func.isRequired
 }
+
+const mapStateToProps = state => ({
+	isFieldDirty: selectFieldByKey('isFieldDirty')(state),
+	isAiOpponent: selectFieldByKey('isAiOpponent')(state)
+})
+
+export const InformationLayout = connect(mapStateToProps, {
+	setAiOpponent
+})(InformationLayoutComponent)

@@ -1,19 +1,28 @@
+import { Component } from 'react'
 import PropTypes from 'prop-types'
 
 import { Field, InformationContainer } from '../'
-import styles from './GameLayout.module.scss'
 
-export const GameLayout = ({ restartGame }) => {
-	return (
-		<div className={styles.game}>
-			<h1 className={styles.title}>⚔️ Chrome vs IE ⚔️</h1>
+//  ← — — — — — — — — — — — — {{ 🗲 }} — — — — — — — — — — — — → //
 
-			<InformationContainer restartGame={restartGame} />
-			<Field />
-		</div>
-	)
+class GameLayoutComponent extends Component {
+	render() {
+		const { restartGame } = this.props
+		return (
+			<div className='grid gap-6'>
+				<h1 className='text-3xl font-bold text-center'>
+					⚔️ Chrome vs IE ⚔️
+				</h1>
+
+				<InformationContainer restartGame={restartGame} />
+				<Field />
+			</div>
+		)
+	}
 }
 
-GameLayout.propTypes = {
+GameLayoutComponent.propTypes = {
 	restartGame: PropTypes.func.isRequired
 }
+
+export const GameLayout = GameLayoutComponent

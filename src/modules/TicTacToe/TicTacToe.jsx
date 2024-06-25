@@ -1,5 +1,8 @@
+import { Component } from 'react'
 import { GameContainer } from './components'
 
-export const TicTacToe = () => {
-	return <GameContainer />
+export class TicTacToe extends Component {
+	render() {
+		return <GameContainer />
+	}
 }
